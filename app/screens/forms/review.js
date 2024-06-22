@@ -4,12 +4,14 @@ import { useFormContext } from "../../formContext";
 import { useFormDataStore } from '../../globalStore';
 import Header from '../../../components/customComponents/header';
 import { useSQLiteContext } from 'expo-sqlite/next';
+import useIdStore from '../../globalStore';
 
 export default function Review() {
   const { formData } = useFormContext();
   const { setFinalFormData } = useFormDataStore();
   const [customerData, setCustomerData] = useState([]);
   const off = useSQLiteContext();
+  const uuid = useIdStore((state) => state.uuid); 
 
   useEffect(() => {
     getData();
@@ -17,11 +19,14 @@ export default function Review() {
 
   async function getData() {
     try {
+       console.log("hii")
       const categoriesResult = await off.getAllAsync(
-        `SELECT * FROM Customer;`
+        `SELECT * FROM "Customer";`,
+        [uuid]
       );
+      console.log("hii")
       setCustomerData(categoriesResult);
-      console.log("Customer Data:", categoriesResult);
+      console.log("Customer FINAL Data:", categoriesResult);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -31,64 +36,68 @@ export default function Review() {
     console.log("Inside submit");
     console.log(formData.address_line_1, formData.address_line_2, formData.address_line_3)
     try {
-      await off.withTransactionAsync(async (tx) => {
-        await off.runAsync(
-          `INSERT INTO Customer (
-              customer_type,
-              product_options,
-              applicant_type,
-              number_of_applicants,
-              mode_of_operation,
-              address_line_1,
-              address_line_2,
-              address_line_3,
-              address_type,
-              alternate_email_id,
-              email_id,
-              alternate_mobile_number,
-              district,
-              marital_status,
-              first_name,
-              last_name,
-              pincode,
-              gender,
-              middle_name,
-              mother_name,
-              father_name,
-              state,
-              place_of_birth
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-          [
-            formData.customer_type,
-            formData.product_options,
-            formData.applicant_type,
-            formData.number_of_applicants,
-            formData.mode_of_operation,
-            formData.address_line_1,
-            formData.address_line_2,
-            formData.address_line_3,
-            formData.address_type,
-            formData.alternate_email_id,
-            formData.email_id,
-            formData.alternate_mobile_number,
-            formData.city,
-            formData.district,
-            formData.country,
-            formData.first_name,
-            formData.last_name,
-            formData.pincode,
-            formData.gender,
-            formData.middle_name,
-            formData.mother_name,
-            formData.father_name,
-            formData.state,
-            formData.place_of_birth
-          ]
-        );
-      });
+   
+          await off.withTransactionAsync(async (tx) => {
+            await off.runAsync(
+                `UPDATE Customer 
+                 SET
+                    customer_type = ?,
+                    product_options = ?,
+                    applicant_type = ?,
+                    number_of_applicants = ?,
+                    mode_of_operation = ?,
+                    address_line_1 = ?,
+                    address_line_2 = ?,
+                    address_line_3 = ?,
+                    address_type = ?,
+                    alternate_email_id = ?,
+                    email_id = ?,
+                    alternate_mobile_number = ?,
+                    district = ?,
+                    marital_status = ?,
+                    first_name = ?,
+                    last_name = ?,
+                    pincode = ?,
+                    gender = ?,
+                    middle_name = ?,
+                    mother_name = ?,
+                    father_name = ?,
+                    state = ?,
+                    place_of_birth = ?
+                 WHERE uid = ?;`,
+                [
+                    formData.customer_type,
+                    formData.product_options,
+                    formData.applicant_type,
+                    formData.number_of_applicants,
+                    formData.mode_of_operation,
+                    formData.address_line_1,
+                    formData.address_line_2,
+                    formData.address_line_3,
+                    formData.address_type,
+                    formData.alternate_email_id,
+                    formData.email_id,
+                    formData.alternate_mobile_number,
+                    formData.district, // Fixed here as formData.city was not matching with the schema
+                    formData.marital_status, // Fixed here as formData.country was not matching with the schema
+                    formData.first_name,
+                    formData.last_name,
+                    formData.pincode,
+                    formData.gender,
+                    formData.middle_name,
+                    formData.mother_name,
+                    formData.father_name,
+                    formData.state,
+                    formData.place_of_birth,
+                    formData.uid // Add the uid value at the end of the array
+                ]
+            );
+        });
+        
       await getData();
-      Alert.alert('Success');
+      Alert.alert('Success uPDATED!! tHANK U ');
     } catch (error) {
+      await getData();
       console.error("Error inserting data:", error);
       // Alert.alert('Error');
     }

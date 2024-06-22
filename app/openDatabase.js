@@ -52,7 +52,7 @@ export default function Database() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text></Text>
+      <Text>Coonecteddd</Text>
     </View>
   );
 }

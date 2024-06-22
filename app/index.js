@@ -19,9 +19,10 @@ export default function Index() {
 
 <>
 
- {/* <SQLiteProvider databaseName="mySQLiteDB.db" useSuspense><Home/></SQLiteProvider>
-<Database/> */}
+<SQLiteProvider databaseName="formData.db" useSuspense>
+
 <LoginScreen/>
+</SQLiteProvider>
 
 
 

@@ -1,6 +1,6 @@
 
 import { View, Text, StyleSheet, ScrollView, Button, TextInput, Alert, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Header from '../../../components/customComponents/header';
@@ -9,6 +9,9 @@ import { useSQLiteContext } from 'expo-sqlite/next';
 import { router } from 'expo-router';
 import { useContext } from 'react';
 import { useFormContext } from "../../formContext";
+import uuid from 'react-native-uuid';
+import useIdStore from '../../globalStore';
+
 
  
 export default function ProductType() {
@@ -26,6 +29,8 @@ export default function ProductType() {
     const[customerData, setCustomerData]=useState([]);
     const { updateFormData } = useFormContext();
     const { formData } = useFormContext();
+    const{id, setId}=useIdStore();  
+ 
  
     
     
@@ -117,6 +122,7 @@ export default function ProductType() {
     };
 
     const handleSubmit = async () => {
+       
         if (selectedValueRes === 'Minor' && !validateMinorDob()) {
             Alert.alert('Error', 'DOB does not indicate a minor account.');
             return;
@@ -141,6 +147,10 @@ export default function ProductType() {
             setCustomerData(categoriesResult);
             console.log("categories", categoriesResult);
           }
+
+          const uuidno= uuid.v4(); 
+          setId(uuidno);
+          console.log(uuidno,"uuid number")
         const formData = {
             customer_type: selectedValue,
             product_options: selectedValueRes,
@@ -149,39 +159,49 @@ export default function ProductType() {
             primary_holder_dob: dob.toDateString(),
             mode_of_operation: mop,
             dob_proof_taken: dobProofTaken ? 1 : 0,
-            account_under_guardian: accountUnderGuardian ? 1 : 0
+            account_under_guardian: accountUnderGuardian ? 1 : 0,
+            uuid:uuidno
         };
        
         try {
-            // await off.withTransactionAsync(async (tx) => {
-            //     await off.runAsync(
-            //         `INSERT INTO Customer (
-            //             customer_type,
-            //             product_options,
-            //             applicant_type,
-            //             number_of_applicants,
-            //             primary_holder_dob,
-            //             mode_of_operation
-                        
-                        
-            //         ) VALUES (?, ?, ?, ?, ?, ?);`,
-            //         [
-            //             formData.customer_type,
-            //             formData.product_options,
-            //             formData.applicant_type,
-            //             formData.number_of_applicants,
-            //             formData.primary_holder_dob,
-            //             formData.mode_of_operation
+       
+            await off.withTransactionAsync(async (tx) => {
+                await off.runAsync(
+                    `INSERT INTO "Customer"(
+                 
+                        customer_type,
+                        product_options,
+                        applicant_type,
+                        number_of_applicants,
+                        primary_holder_dob,
+                        first_name,
+                        mode_of_operation
                        
-            //         ]
-            //     );
-            // });
+                        
+                        
+                        
+                    ) VALUES (?, ?, ?, ?, ?,?,?);`,
+                    [   
+                        formData.customer_type,
+                        formData.product_options,
+                        formData.applicant_type,
+                        formData.number_of_applicants,
+                        formData.primary_holder_dob,
+                        uuidno,
+                        formData.mode_of_operation
+                       
+                        
+                       
+                    ]
+                );
+            });
            await getData();
            updateFormData(formData);
            
             router.navigate('/screens/forms/personalDetailsForm');
         } catch (error) {
             console.error('Error saving form data:', error);
+            router.navigate('/screens/forms/personalDetailsForm');
             Alert.alert('Error', 'Failed to save form data.');
         }
     };

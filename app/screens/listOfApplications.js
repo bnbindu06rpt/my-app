@@ -6,6 +6,8 @@ import FloatingButton from '../../components/customComponents/floatingButton';
 import { router } from 'expo-router';
 import { LogBox } from 'react-native';
 import { SQLiteProvider } from 'expo-sqlite/next';
+import { openDatabase } from 'expo-sqlite';
+import Database from '../openDatabase';
  
 const goToActivityForm = () => {
   router.navigate('/screens/newApplicationOptions')
@@ -16,7 +18,9 @@ const List = () => {
   return (
   <SQLiteProvider databaseName='formData.db' useSuspense>
     <SafeAreaView style={styles.container}>
+
         <Header backPath="screens/loginScreen"/>
+      
       <Card/>
       <FloatingButton onPress={goToActivityForm}/>
     </SafeAreaView>

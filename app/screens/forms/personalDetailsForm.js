@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Button, Pressable, LogBox } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Button, Pressable, LogBox, Alert } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Collapsible from 'react-native-collapsible';
 import { router } from 'expo-router';
@@ -13,6 +13,8 @@ import { DropdownIcon, DropupIcon } from '../../../assets/images/assets';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import Header from '../../../components/customComponents/header';
 import { useFormContext } from '../../formContext';
+import useIdStore from '../../globalStore';
+import { useSQLiteContext } from 'expo-sqlite/next';
  
 export default function PersonalDetailsForm() {
   const [validationErrors, setValidationErrors] = useState({});
@@ -27,9 +29,11 @@ export default function PersonalDetailsForm() {
     'Personal Details': false,
   });
   const { updateFormData } = useFormContext();
+  const uuid = useIdStore((state) => state.uuid); 
+  const off = useSQLiteContext();
  
   console.disableYellowBox = true;
-  console.log("this if formdata from previous formmmmmm", formData)
+  //console.log("this if formdata from previous formmmmmm", formData)
  
   const toggleSection = (section) => {
     setIsCollapsed({ ...isCollapsed, [section]: !isCollapsed[section] });
@@ -90,9 +94,59 @@ export default function PersonalDetailsForm() {
       try {
         console.log('Form data', formValues);
         updateFormData(formValues);
+        await off.withTransactionAsync(async (tx) => {
+          await off.runAsync(
+              `UPDATE Customer 
+               SET
+                  customer_type = ?,
+                  product_options = ?,
+                  applicant_type = ?,
+                  number_of_applicants = ?,
+                  primary_holder_dob = ?,
+                  mode_of_operation = ?,
+                  middle_name = ?,
+                  last_name = ?,
+                  gender = ?,
+                  date_of_birth = ?,
+                  place_of_birth = ?,
+                  mother_name = ?,
+                  father_name = ?,
+                  primary_mobile_number = ?,
+                  alternate_mobile_number = ?,
+                  email_id = ?,
+                  alternate_email_id = ?,
+                  marital_status = ?
+               WHERE uuid = ?;`,
+              [
+                  formData.customer_type,
+                  formData.product_options,
+                  formData.applicant_type,
+                  formData.number_of_applicants,
+                  formData.primary_holder_dob,
+                  formData.mode_of_operation,
+                 
+                  formData.middle_name,
+                  formData.last_name,
+                  formData.gender,
+                  formData.date_of_birth,
+                  formData.place_of_birth,
+                  formData.mother_name,
+                  formData.father_name,
+                  formData.primary_mobile_number,
+                  formData.alternate_mobile_number,
+                  formData.email_id,
+                  formData.alternate_email_id,
+                  formData.marital_status,
+                  uuid // Replace with the actual uid value
+              ]
+          );
+      });
+      Alert.alert("Sucess")
+      
         router.navigate('screens/forms/addressDetailsForm'); // Navigation to panVerificationScreen
       } catch (err) {
         console.log('error', err);
+        router.navigate('screens/forms/addressDetailsForm');
       }
     //}
   };

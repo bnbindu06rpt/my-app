@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Button, Pressable, LogBox } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Button, Pressable, LogBox, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Collapsible from 'react-native-collapsible';
@@ -13,6 +13,11 @@ import { DropdownIcon, DropupIcon } from '../../../assets/images/assets';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import Header from '../../../components/customComponents/header';
 import { useFormContext } from '../../formContext';
+import useIdStore from '../../globalStore';
+import { useSQLiteContext } from 'expo-sqlite/next';
+
+
+
  
 export default function AddressDetailsForm() {
   const [validationErrors, setValidationErrors] = useState({});
@@ -23,12 +28,14 @@ export default function AddressDetailsForm() {
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const{formData}=useFormContext();
+  const off = useSQLiteContext();
   const [isCollapsed, setIsCollapsed] = useState({
     'Permanent Address Type': false,
     'Overseas Address': false,
     'Communication Address': false,
   });
   const { updateFormData } = useFormContext();
+  const uuid = useIdStore((state) => state.uuid); 
  
   console.disableYellowBox = true;
   LogBox.ignoreAllLogs();
@@ -41,7 +48,7 @@ export default function AddressDetailsForm() {
   const toggleSection = (section) => {
     setIsCollapsed({ ...isCollapsed, [section]: !isCollapsed[section] });
   };
-  console.log("this if formdata from previous formmmmmm", formData)
+  //console.log("this if formdata from previous formmmmmm", formData)
   const onSubmit = async () => {
     const errors = validateForm();
     // if (Object.keys(errors).length > 0) {
@@ -50,9 +57,45 @@ export default function AddressDetailsForm() {
       try {
         updateFormData(formValues)
         console.log('Form data', formValues);
+        await off.withTransactionAsync(async (tx) => {
+          await off.runAsync(
+              `UPDATE Customer 
+               SET
+                  address_line_1 = ?,
+                  address_line_2 = ?,
+                  address_line_3 = ?,
+                  pincode = ?,
+                  district = ?,
+                  state = ?,
+                  country = ?,
+                  address_type = ?,
+                  city = ?
+                  
+               WHERE uid = ?;`,
+              [
+                  formData.address_line_1,
+                  formData.address_line_2,
+                  formData.address_line_3,
+                  formData.pincode,
+                  formData.district,
+                  formData.state,
+                  formData.country,
+                  formData.address_type, // Include fields from other sections
+                  formData.city,
+                  uuid
+                  // formData.same_as_permanent_address,
+                  // formData.same_as_overseas_address,
+                  // formData.address_preference,
+                   // Replace with the actual uid value
+              ]
+          );
+      });
+      Alert.alert("successs")
+      
         router.navigate('screens/forms/review');
       } catch (err) {
         console.log('error', err);
+        router.navigate('screens/forms/review');
       }
     //}
   };
