@@ -20,6 +20,7 @@ export default function Index() {
 <>
 
 <SQLiteProvider databaseName="formData.db" useSuspense>
+  {/* <Database/> */}
 
 <LoginScreen/>
 </SQLiteProvider>

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import FloatingButton from './floatingButton';
+import { useSQLiteContext } from 'expo-sqlite/next';
  
  
 const loans = [
@@ -15,6 +16,7 @@ const loans = [
 ];
  
 const LoanSummaryCards = ({ onFilter }) => {
+    
     const noOfApplications = loans.length;
     const pending = loans.filter(loan => loan.status === 'Pending').length;
     const approved = loans.filter(loan => loan.status === 'Approved').length;
@@ -29,32 +31,31 @@ const LoanSummaryCards = ({ onFilter }) => {
             <TouchableOpacity style={styles.summaryItem} onPress={() => onFilter('Exception')}>
                 <Ionicons name="alert-circle" size={20} color="#FF0000" />
                 <Text style={styles.summaryHeading}>Exception</Text>
-                <Text style={styles.summaryValue}>{exception}</Text>
+                <Text style={styles.summaryValue}>0</Text>
             </TouchableOpacity>
             <View style={styles.verticalLine} />
- 
             <TouchableOpacity style={styles.summaryItem} onPress={() => onFilter('Rejected')}>
                 <Ionicons name="close-circle" size={20} color="#FF0000" />
                 <Text style={styles.summaryHeading}>Rejected</Text>
-                <Text style={styles.summaryValue}>{rejected}</Text>
+                <Text style={styles.summaryValue}>0</Text>
             </TouchableOpacity>
             <View style={styles.verticalLine} />
             <TouchableOpacity style={styles.summaryItem} onPress={() => onFilter('Pending')}>
                 <Ionicons name="time" size={20} color="#FFA500" />
                 <Text style={styles.summaryHeading}>Pending</Text>
-                <Text style={styles.summaryValue}>{pending}</Text>
+                <Text style={styles.summaryValue}>4</Text>
             </TouchableOpacity>
             <View style={styles.verticalLine} />
             <TouchableOpacity style={styles.summaryItem} onPress={() => onFilter('Approved')}>
                 <Ionicons name="checkmark-circle" size={20} color="#008000" />
                 <Text style={styles.summaryHeading}>Approved</Text>
-                <Text style={styles.summaryValue}>{approved}</Text>
+                <Text style={styles.summaryValue}>0</Text>
             </TouchableOpacity>
             <View style={styles.verticalLine} />
             <TouchableOpacity style={styles.summaryItem} onPress={() => onFilter('Saved')}>
                 <Ionicons name="bookmark" size={20} color="green" />
                 <Text style={styles.summaryHeading}>Saved</Text>
-                <Text style={styles.summaryValue}>{saved}</Text>
+                <Text style={styles.summaryValue}>0</Text>
             </TouchableOpacity>
         </View>
     );
@@ -62,7 +63,25 @@ const LoanSummaryCards = ({ onFilter }) => {
  
 const LoanList = () => {
     const [filteredLoans, setFilteredLoans] = useState(loans.filter(loan => loan.status === 'Pending'));
- 
+    const[data, setData]=useState();
+    const db = useSQLiteContext();
+    useEffect(() => {
+        getData();
+      }, [db]); // Ensure useEffect runs when off (SQLite context) changes
+   
+      async function getData() {
+        try {
+          const categoriesResult = await db.getAllAsync(
+            `SELECT * FROM "Customerss";`,
+           
+          );
+          console.log("dfghjk..................................................................",categoriesResult)
+          setData(categoriesResult)
+          console.log("dfghjk dataaaaaaaaa", data)
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
     const handleFilter = (status) => {
         if (status === 'All') {
             setFilteredLoans(loans);
@@ -91,28 +110,34 @@ const LoanList = () => {
     const renderItem = ({ item }) => (
         <View style={styles.card}>
             <View style={styles.header}>
-                <Text style={styles.applicantName}>{item.applicantName}</Text>
-                <View style={[styles.badge, getStatusBadgeStyle(item.status)]}>
-                    <Text style={styles.badgeText}>{item.status}</Text>
+                <Text style={styles.applicantName}>{item.first_name} {item.last_name}</Text> 
+                 <View style={[styles.badge, styles.pendingBadge]}>
+                    <Text style={styles.badgeText}>Pending</Text>
                 </View>
+                
             </View>
             <View style={styles.horizontalLine} />
+            {/* <View style={styles.row}>
+            <Text style={styles.data}>Name:</Text>
+            <Text style={styles.details}> {item.first_name}{item.last_name}</Text>
+            </View> */}
             <View style={styles.row}>
-            <Text style={styles.data}>Customer ID:</Text>
-            <Text style={styles.details}> {item.custid}</Text>
+            <Text style={styles.data}>Customer Type:</Text>
+            <Text style={styles.details}> {item.customer_type}</Text>
             </View>
             <View style={styles.row}>
             <Text style={styles.data}>Date of Birth:</Text>
-            <Text style={styles.details}>{item.dob}</Text>
+            <Text style={styles.details}>{item.date_of_birth}</Text>
             </View>
             <View style={styles.row}>
             <Text style={styles.data}>Mobile Number:</Text>
-            <Text style={styles.details}>{item.number}</Text>
+            <Text style={styles.details}>{item.primary_mobile_number}</Text>
             </View>
             <View style={styles.row}>
-            <Text style={styles.data}>Location:</Text>
-            <Text style={styles.details}>{item.location}</Text>
+            <Text style={styles.data}>Email ID:</Text>
+            <Text style={styles.details}>{item.email_id}</Text>
             </View>
+           
         </View>
     );
  
@@ -120,7 +145,7 @@ const LoanList = () => {
         <View style={styles.container}>
             <LoanSummaryCards onFilter={handleFilter} />
             <FlatList
-                data={filteredLoans}
+                data={data}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={styles.listContainer}

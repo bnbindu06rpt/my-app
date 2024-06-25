@@ -30,6 +30,7 @@ export default function PersonalDetailsForm() {
   });
   const { updateFormData } = useFormContext();
   const uuid = useIdStore((state) => state.uuid); 
+  console.log(uuid,"uuid number")
   const off = useSQLiteContext();
  
   console.disableYellowBox = true;
@@ -96,8 +97,8 @@ export default function PersonalDetailsForm() {
         updateFormData(formValues);
         await off.withTransactionAsync(async (tx) => {
           await off.runAsync(
-              `UPDATE Customer 
-               SET
+              `UPDATE Customerss
+                 SET
                   customer_type = ?,
                   product_options = ?,
                   applicant_type = ?,
@@ -105,6 +106,7 @@ export default function PersonalDetailsForm() {
                   primary_holder_dob = ?,
                   mode_of_operation = ?,
                   middle_name = ?,
+                  first_name = ?,
                   last_name = ?,
                   gender = ?,
                   date_of_birth = ?,
@@ -118,25 +120,26 @@ export default function PersonalDetailsForm() {
                   marital_status = ?
                WHERE uuid = ?;`,
               [
-                  formData.customer_type,
-                  formData.product_options,
-                  formData.applicant_type,
-                  formData.number_of_applicants,
-                  formData.primary_holder_dob,
-                  formData.mode_of_operation,
+                  formValues.customer_type,
+                  formValues.product_options,
+                  formValues.applicant_type,
+                  formValues.number_of_applicants,
+                  formValues.primary_holder_dob,
+                  formValues.mode_of_operation,
                  
-                  formData.middle_name,
-                  formData.last_name,
-                  formData.gender,
-                  formData.date_of_birth,
-                  formData.place_of_birth,
-                  formData.mother_name,
-                  formData.father_name,
-                  formData.primary_mobile_number,
-                  formData.alternate_mobile_number,
-                  formData.email_id,
-                  formData.alternate_email_id,
-                  formData.marital_status,
+                  formValues.middle_name,
+                  formValues.first_name,
+                  formValues.last_name,
+                  formValues.gender,
+                  formValues.date_of_birth,
+                  formValues.place_of_birth,
+                  formValues.mother_name,
+                  formValues.father_name,
+                  formValues.primary_mobile_number,
+                  formValues.alternate_mobile_number,
+                  formValues.email_id,
+                  formValues.alternate_email_id,
+                  formValues.marital_status,
                   uuid // Replace with the actual uid value
               ]
           );

@@ -5,6 +5,7 @@ import { useFormDataStore } from '../../globalStore';
 import Header from '../../../components/customComponents/header';
 import { useSQLiteContext } from 'expo-sqlite/next';
 import useIdStore from '../../globalStore';
+import { router } from 'expo-router';
 
 export default function Review() {
   const { formData } = useFormContext();
@@ -12,6 +13,7 @@ export default function Review() {
   const [customerData, setCustomerData] = useState([]);
   const off = useSQLiteContext();
   const uuid = useIdStore((state) => state.uuid); 
+  console.log("form context data", formData)
 
   useEffect(() => {
     getData();
@@ -21,7 +23,7 @@ export default function Review() {
     try {
        console.log("hii")
       const categoriesResult = await off.getAllAsync(
-        `SELECT * FROM "Customer";`,
+        `SELECT * FROM "Customerss";`,
         [uuid]
       );
       console.log("hii")
@@ -39,7 +41,7 @@ export default function Review() {
    
           await off.withTransactionAsync(async (tx) => {
             await off.runAsync(
-                `UPDATE Customer 
+                `UPDATE Customerss 
                  SET
                     customer_type = ?,
                     product_options = ?,
@@ -64,7 +66,7 @@ export default function Review() {
                     father_name = ?,
                     state = ?,
                     place_of_birth = ?
-                 WHERE uid = ?;`,
+                 WHERE uuid = ?;`,
                 [
                     formData.customer_type,
                     formData.product_options,
@@ -95,7 +97,8 @@ export default function Review() {
         });
         
       await getData();
-      Alert.alert('Success uPDATED!! tHANK U ');
+      Alert.alert('Successfully Updated and Submitted!! ');
+      router.navigate("/screens/listOfApplications")
     } catch (error) {
       await getData();
       console.error("Error inserting data:", error);
@@ -109,41 +112,64 @@ export default function Review() {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <Header backPath="/screens/forms/addressDetailsForm" />
-        <Text style={styles.header}>Final Form Data:</Text>
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Header backPath="/screens/forms/documentsForm" />
+      </View>
+      <Text style={styles.header}>Final Form Data:</Text>
+      <View style={styles.card}>
         {Object.entries(formData).map(([key, value]) => (
           <View key={key} style={styles.fieldContainer}>
             <Text style={styles.keyText}>{key}:</Text>
             <Text style={styles.valueText}>{value}</Text>
           </View>
         ))}
-        <Button title="Submit" onPress={handleSubmit} color="#00408F" />
       </View>
-    </ScrollView>
-  );
+      <Button title="Submit" onPress={handleSubmit} color="#00408F" />
+    </View>
+  </ScrollView>
+);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    flex: 1,
-  },
-  header: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    paddingTop: 30
-  },
-  fieldContainer: {
-    flexDirection: 'row',
-    marginBottom: 5,
-  },
-  keyText: {
-    fontWeight: 'bold',
-    width: 150,
-  },
-  valueText: {
-    flex: 1,
-  },
+container: {
+  padding: 10,
+  flex: 1,
+},
+header: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 10,
+  paddingTop: 30,
+},
+fieldContainer: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  marginBottom: 5,
+},
+keyText: {
+  fontWeight: 'bold',
+},
+valueText: {
+  flex: 1,
+  textAlign: 'right',
+},
+headerContainer: {
+  backgroundColor: '#00408F', // Example background color
+  padding: 10,
+  borderRadius: 1,
+  marginHorizontal: -25,
+  marginTop: -20,
+},
+card: {
+  backgroundColor: '#FFFFFF',
+  borderRadius: 8,
+  padding: 15,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevation: 2,
+  marginBottom: 20,
+},
 });

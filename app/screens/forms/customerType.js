@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { useFormContext } from "../../formContext";
 import uuid from 'react-native-uuid';
 import useIdStore from '../../globalStore';
+import Database from '../../openDatabase';
 
 
  
@@ -142,7 +143,7 @@ export default function ProductType() {
 
         async function getData() {
             const categoriesResult = await off.getAllAsync(
-              `SELECT * FROM Customer;`
+              `SELECT * FROM Customerss;`
             );
             setCustomerData(categoriesResult);
             console.log("categories", categoriesResult);
@@ -167,14 +168,14 @@ export default function ProductType() {
        
             await off.withTransactionAsync(async (tx) => {
                 await off.runAsync(
-                    `INSERT INTO "Customer"(
+                    `INSERT INTO "Customerss"(
                  
                         customer_type,
                         product_options,
                         applicant_type,
                         number_of_applicants,
                         primary_holder_dob,
-                        first_name,
+                        uuid,
                         mode_of_operation
                        
                         
@@ -209,7 +210,9 @@ export default function ProductType() {
     return (
        
         <View style={styles.mainContainer}>
-            <Header backPath={'screens/newApplicationOptions'} />
+            <Header backPath={'screens/forms/newApplicationOptions'} />
+            {/* <Database/> */}
+            
             <Text style={styles.text}>Select Customer Type and Product</Text>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View>

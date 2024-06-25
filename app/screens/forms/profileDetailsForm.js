@@ -1,126 +1,71 @@
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Button, Pressable, LogBox, Alert } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Button, Pressable, LogBox } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Collapsible from 'react-native-collapsible';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import CustomInput from '../../../components/formComponents/customInput';
-import Dropdown from '../../../components/formComponents/dropdown';
 import RadioButton from '../../../components/formComponents/customRadioButton';
-import { addressDetailsFormData } from '../../../components/formComponents/formData';
+import { profileDetailsFormData } from '../../../components/formComponents/formData';
 import { themeColor } from '../../../constants/constants';
 import { DropdownIcon, DropupIcon } from '../../../assets/images/assets';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import Header from '../../../components/customComponents/header';
-import { useFormContext } from '../../formContext';
-import useIdStore from '../../globalStore';
-import { useSQLiteContext } from 'expo-sqlite/next';
-
  
-export default function AddressDetailsForm() {
+export default function ProfileDetailsForm() {
   const [validationErrors, setValidationErrors] = useState({});
   const [formValues, setFormValues] = useState({});
-  const[customerForm, setCustomerForm]=useState([]);
   const [selectedValue, setSelectedValue] = useState(null);
   const [radioSelect, setRadioSelect] = useState(null);
-  const [renderFormData, setRenderFormData] = useState(addressDetailsFormData);
+  const [renderFormData, setRenderFormData] = useState(profileDetailsFormData || { elements: [] });
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
-  const{formData}=useFormContext();
-  const off = useSQLiteContext();
   const [isCollapsed, setIsCollapsed] = useState({
-    'Permanent Address Type': false,
-    'Overseas Address': false,
-    'Communication Address': false,
+    'Profile Details': false,
   });
-  const { updateFormData } = useFormContext();
-  const uuid = useIdStore((state) => state.uuid); 
  
   console.disableYellowBox = true;
-  LogBox.ignoreAllLogs();
-  console.log(uuid,"uuid number")
-
-  useEffect(() => {
-    setFormValues(formData);
-  }, [formData]);
-
  
   const toggleSection = (section) => {
     setIsCollapsed({ ...isCollapsed, [section]: !isCollapsed[section] });
   };
-  //console.log("this if formdata from previous formmmmmm", formData)
+ 
   const onSubmit = async () => {
     const errors = validateForm();
     // if (Object.keys(errors).length > 0) {
     //   setValidationErrors(errors);
     // } else {
       try {
-        updateFormData(formValues)
-        console.log('Form data', customerForm);
-        await off.withTransactionAsync(async (tx) => {
-          await off.runAsync(
-              `UPDATE Customerss
-               SET
-                  address_line_1 = ?,
-                  address_line_2 = ?,
-                  address_line_3 = ?,
-                  pincode = ?,
-                  district = ?,
-                  state = ?,
-                  country = ?,
-                  address_type = ?,
-                  city = ?
-                  
-               WHERE uuid = ?;`,
-              [
-                  customerForm.address_line_1,
-                  customerForm.address_line_2,
-                  customerForm.address_line_3,
-                  customerForm.pincode,
-                  customerForm.district,
-                  customerForm.state,
-                  customerForm.country,
-                  customerForm.address_type, // Include fields from other sections
-                  customerForm.city,
-                  uuid
-                  // formData.same_as_permanent_address,
-                  // formData.same_as_overseas_address,
-                  // formData.address_preference,
-                   // Replace with the actual uid value
-              ]
-          );
-      });
-      Alert.alert("successs")
-      
-        router.navigate('screens/forms/profileDetailsForm');
+        console.log('Form data', formValues);
+        router.navigate('screens/forms/documentsForm')
       } catch (err) {
         console.log('error', err);
-        router.navigate('screens/forms/profileDetailsForm');
       }
-    //}
+    
   };
  
   const validateForm = () => {
     const errors = {};
-    addressDetailsFormData.elements.forEach((element) => {
-      if (element.isRequired && !formValues[element.name]) {
-        errors[element.name] = `${element.title} is required`;
-      }
-      if (element.validation && element.validation.regex && !element.validation.regex.test(formValues[element.name])) {
-        errors[element.name] = element.validation.message;
-      }
-    });
+    if (renderFormData && renderFormData.elements) {
+      renderFormData.elements.forEach((element) => {
+        if (element.isRequired && !formValues[element.name]) {
+          errors[element.name] = `${element.title} is required`;
+        }
+        if (element.validation && element.validation.regex && !element.validation.regex.test(formValues[element.name])) {
+          errors[element.name] = element.validation.message;
+        }
+      });
+    }
     return errors;
   };
- 
+  LogBox.ignoreAllLogs();
   const handleInputChange = (name, value) => {
     setFormValues((prevFormValues) => {
       const updatedFormValues = { ...prevFormValues, [name]: value };
-      
  
       // Perform dynamic validation for the changed field
       const errors = { ...validationErrors };
-      const element = addressDetailsFormData.elements.find((el) => el.name === name);
+      const element = renderFormData.elements.find((el) => el.name === name);
  
       if (element) {
         if (element.isRequired && !value) {
@@ -135,19 +80,21 @@ export default function AddressDetailsForm() {
       setValidationErrors(errors);
       return updatedFormValues;
     });
-    setCustomerForm(prevFormValues => ({ ...prevFormValues, [name]: value }));
   };
  
   const renderFormElements = (section) => {
-    return addressDetailsFormData.elements
-      .filter((element) => element.section === section)
-      .sort((a, b) => a.order - b.order)
-      .map((element, index) => (
-        <View key={index} style={styles.formElement}>
-          {renderFormElement(element)}
-          {validationErrors[element.name] && <Text style={styles.error}>{validationErrors[element.name]}</Text>}
-        </View>
-      ));
+    if (renderFormData && renderFormData.elements) {
+      return renderFormData.elements
+        .filter((element) => element.section === section)
+        .sort((a, b) => a.order - b.order)
+        .map((element, index) => (
+          <View key={index} style={styles.formElement}>
+            {renderFormElement(element)}
+            {validationErrors[element.name] && <Text style={styles.error}>{validationErrors[element.name]}</Text>}
+          </View>
+        ));
+    }
+    return null;
   };
  
   const renderFormElement = (element) => {
@@ -206,7 +153,7 @@ export default function AddressDetailsForm() {
               }}
               SelectedData={radioSelect}
               disableLine={1}
-              value={radioSelect||formValues[element.name]}
+              value={radioSelect}
               data={element.radioData}
               title={element.title}
             />
@@ -245,7 +192,7 @@ export default function AddressDetailsForm() {
  
   return (
     <View style={styles.container}>
-      <Header backPath="screens/forms/personalDetailsForm" />
+      <Header backPath="screens/forms/addressDetailsForm" />
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <View style={styles.card}>
           <View style={styles.section}>
@@ -282,7 +229,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-    padding: 20,
+    padding: 10,
     shadowColor: '#000000',
     shadowOpacity: 0.2,
     shadowRadius: 5,
@@ -330,8 +277,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    paddingVertical: 7,
-    paddingHorizontal: 10,
   },
   icon: {
     marginLeft: 'auto', // Align the icon to the rightmost edge of its container

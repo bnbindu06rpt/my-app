@@ -1,3 +1,84 @@
+export const documentDetailsFormData = {
+ 
+  "elements": [
+    {
+      "name": "photo",
+      "type": "ImagePicker",
+      "title": "Photo",
+      "placeholder": "Select Photo",
+      "order": 1,
+      "isRequired": true,
+      "section": "Document Details",
+      "fields": [ "document"]
+    },
+    {
+      "name": "signature",
+      "type": "ImagePicker",
+      "title": "Signature",
+      "placeholder": "Select Signature",
+      "order": 2,
+      "isRequired": true,
+      "section": "Document Details",
+      "fields": [ "document"]
+    },
+    {
+      "name": "pan_or_form_60",
+      "type": "ImagePicker",
+      "title": "PAN or Form 60",
+      "placeholder": "Select PAN or Form 60",
+      "order": 3,
+      "isRequired": true,
+      "section": "Document Details",
+      "fields": ["documentID",  "document"]
+    },
+    {
+      "name": "poa_if_not_aadhaar_authenticated",
+      "type": "ImagePicker",
+      "title": "POA, if not Aadhaar authenticated",
+      "placeholder": "Select POA",
+      "order": 4,
+      "section": "Document Details",
+      "fields": ["documentID", "document"]
+    },
+    {
+      "name": "mitc_document",
+      "type": "ImagePicker",
+      "title": "MITC Document",
+      "placeholder": "Select MITC Document",
+      "order": 5,
+      "section": "Document Details",
+      "fields": ["documentID", "document"]
+    },
+    {
+      "name": "communication_address_proof_or_declaration",
+      "type": "ImagePicker",
+      "title": "Communication Address Proof or Declaration",
+      "placeholder": "Select Communication Address Proof or Declaration",
+      "order": 6,
+      "section": "Document Details",
+      "fields": ["documentID", "document"]
+    },
+    {
+      "name": "miscellaneous_document",
+      "type": "ImagePicker",
+      "title": "Miscellaneous Document",
+      "placeholder": "Select Miscellaneous Document",
+      "order": 7,
+      "section": "Document Details",
+      "fields": ["documentID", "issuedDate", "expireDate", "document"]
+    },
+    {
+      "name": "passport_or_visa_for_nri_oci_foreigner",
+      "type": "ImagePicker",
+      "title": "Passport / Visa for NRI / OCI / Foreigner",
+      "placeholder": "Select Passport / Visa",
+      "order": 8,
+      "section": "Document Details",
+      "fields": ["documentID", "issuedDate", "expireDate", "document"]
+    },
+  ]
+};
+
 export const personalDetailsFormData = {
     "elements": [
       {
@@ -31,9 +112,9 @@ export const personalDetailsFormData = {
         "type": "dropdown",
         "title": "Gender",
         "dropdownData": [
-          { key: "male", value: "Male" },
-          { key: "female", value: "Female" },
-          { key: "other", value: "Other" },
+          { key: "Male", value: "Male" },
+          { key: "Female", value: "Female" },
+          { key: "Other", value: "Other" },
         ],
         "isRequired": true,
         "section": "Personal Details",
@@ -134,11 +215,11 @@ export const personalDetailsFormData = {
         "type": "dropdown",
         "title": "Marital Status",
         "dropdownData": [
-          { key: "married", value: "Married" },
-          { key: "unmarried", value: "Unmarried" },
-          { key: "divorced", value: "Divorced" },
-          { key: "widow", value: "Widow" },
-          { key: "undisclosed", value: "Undisclosed" },
+          { key: "Married", value: "Married" },
+          { key: "Unmarried", value: "Unmarried" },
+          { key: "Divorced", value: "Divorced" },
+          { key: "Widow", value: "Widow" },
+          { key: "Undisclosed", value: "Undisclosed" },
         ],
         "isRequired": true,
         "section": "Personal Details",
@@ -298,7 +379,7 @@ export const addressDetailsFormData = {
             "type": "dropdown",
             "title": "Country",
             "dropdownData": [
-                { key: "india", value: 'India' },
+                { key: "India", value: 'India' },
         
               ],
               "isRequired":true,
@@ -324,8 +405,8 @@ export const addressDetailsFormData = {
             "type":"RadioButton",
             "title": "Address Preference",
             "radioData":[
-                {key:"local", value:"Local" },
-                {key:"foreign",value:"Foreign"}
+                {key:"Local", value:"Local" },
+                {key:"Foreign",value:"Foreign"}
     
             ],
             "section":"Communication Address",
@@ -336,11 +417,11 @@ export const addressDetailsFormData = {
             "type": "dropdown",
             "title": "Address Type",
             "dropdownData": [
-                { key: "business", value: "Business" },
-                { key: "registered_office", value:"Registered Office" },
-                { key: "residential", value: "Residential" },
-                { key: "unspecified", value: "Unspecified" },
-                { key: "resident", value: "Resident/Business" },
+                { key: "Business", value: "Business" },
+                { key: "Registered office", value:"Registered Office" },
+                { key: "Residential", value: "Residential" },
+                { key: "Unspecified", value: "Unspecified" },
+                { key: "Resident", value: "Resident/Business" },
         
               ],
               "isRequired":true,
@@ -404,7 +485,7 @@ export const addressDetailsFormData = {
             "type": "dropdown",
             "title": "Country",
             "dropdownData": [
-                { key: "india", value: 'India' },
+                { key: "India", value: 'India' },
         
               ],
               "isRequired":true,
@@ -416,175 +497,175 @@ export const addressDetailsFormData = {
 }
 
 export const profileDetailsFormData = {
-    "elements" : [
+  "elements" : [
+      {
+          "name": "pan_number",
+          "type": "TextInput",
+          "title": "PAN Number",
+          "placeholder": "Enter PAN Number",
+          "isRequired":true,
+          "section": "Profile Details",
+        },
+
         {
-            "name": "pan_number",
-            "type": "TextInput",
-            "title": "PAN Number",
-            "placeholder": "Enter PAN Number",
+          "name": "no_pan",
+          "type": "checkbox",
+          "title": "Don't have Pan?",
+          "section": "Profile Details",
+        },
+
+        {
+          "name": "educational_qualification",
+          "type": "dropdown",
+          "title": "Educational Qualifiaction",
+          "dropdownData": [
+              { key: "Graduate", value: 'Graduate' },
+              { key: "HSC", value: 'HSC' },
+              { key: "Masters", value: 'Masters' },
+              { key: "Others", value: 'Others' },
+              { key: "Professional", value: 'Professional' },
+              { key: "SSC", value: 'SSC' },
+              { key: "Below_ssc", value: 'Below SSC' },
+              { key: "Illiterate", value: 'Illiterate' },
+            ],
             "isRequired":true,
             "section": "Profile Details",
-          },
- 
-          {
-            "name": "no_pan",
-            "type": "checkbox",
-            "title": "Don't have Pan?",
+        },
+
+        {
+          "name": "occupation",
+          "type": "dropdown",
+          "title": "Occupation",
+          "dropdownData": [
+              { key: "Agriculture", value: 'Agriculture' },
+              { key: "Business", value: 'Business' },
+              { key: "Govt sector", value: 'Govt sector' },
+              { key: "Pensioner", value: 'Pensioner' },
+              { key: "Private sector service", value: 'Private Sector Service' },
+              { key: "Professionals & self employed ", value: 'Professionals & Self-Employed ' },
+              { key: "Public sector ", value: 'Public sector' },
+              { key: "Student", value: 'Student' },
+            ],
+            "isRequired":true,
             "section": "Profile Details",
-          },
- 
-          {
-            "name": "educational_qualification",
-            "type": "dropdown",
-            "title": "Educational Qualifiaction",
-            "dropdownData": [
-                { key: "graduate", value: 'Graduate' },
-                { key: "hsc", value: 'HSC' },
-                { key: "masters", value: 'Masters' },
-                { key: "others", value: 'Others' },
-                { key: "professional", value: 'Professional' },
-                { key: "ssc", value: 'SSC' },
-                { key: "below_ssc", value: 'Below SSC' },
-                { key: "illiterate", value: 'Illiterate' },
-              ],
-              "isRequired":true,
-              "section": "Profile Details",
-          },
- 
-          {
-            "name": "occupation",
-            "type": "dropdown",
-            "title": "Occupation",
-            "dropdownData": [
-                { key: "agriculture", value: 'Agriculture' },
-                { key: "Business", value: 'Business' },
-                { key: "govt_sector", value: 'Govt sector' },
-                { key: "pensioner", value: 'Pensioner' },
-                { key: "private_sector_service", value: 'Private Sector Service' },
-                { key: "professionals_&_self_employed ", value: 'Professionals & Self-Employed ' },
-                { key: "public_sector ", value: 'Public sector' },
-                { key: "student", value: 'Student' },
-              ],
-              "isRequired":true,
-              "section": "Profile Details",
-          },
- 
-          {
-            "name": "source_of_income",
-            "type": "dropdown",
-            "title": "Source Of Income",
-            "dropdownData": [
-                { key: "agriculture", value: 'Agriculture' },
-                { key: "Business", value: 'Business' },
-                { key: "salaried", value: 'Salaried' },
-                { key: "others", value: 'Others' },
-                { key: "pensioner", value: 'Pensioner' },
-              ],
-              "isRequired":true,
-              "section": "Profile Details",
-          },
- 
-          {
-            "name": "annual_income_slab",
-            "type": "dropdown",
-            "title": "Annual Income Slab ",
-            "dropdownData": [
-                { key: "Less_than_1_lpa", value: 'Less than 1 LPA ' },
-                { key: "1_5_lpa", value: '1-5 LPA ' },
-                { key: "5_10_lpa ", value: '5-10 LPA ' },
-                { key: "10_15_lpa", value: '10-15 LPA ' },
-                { key: "15_25_lpa", value: '15-25 LPA ' },
-                { key: "more_than_25_lpa", value: 'More than 25 LPA ' },
-              ],
-              "isRequired":true,
-              "section": "Profile Details",
-          },
- 
-          {
-            "name": "politically_exposed_person",
-            "type": "dropdown",
-            "title": "Politically Exposed Person ",
-            "dropdownData": [
-                { key: "domestic_pep", value: 'Domestic PEP' },
-                { key: "international_pep", value: 'International PEP' },
-                { key: "relative_of_domestic_pep", value: 'Relative of Domestic PEP' },
-                { key: "relative_of_international_pep", value: ' Relative of International PEP' },
-                { key: "not_a_pep", value: 'Not a PEP  ' },
-              ],
-              "isRequired":true,
-              "section": "Profile Details",
-          },
- 
-          {
-            "name": "disability",
-            "type": "dropdown",
-            "title": "Disability",
-            "dropdownData": [
-                { key: "physically_challenged", value: 'Physically Challenged'},
-                { key: "mentally_challenged", value: 'Mentally Challenged'},
-                { key: "physically_&_mentally_challenged", value: 'Physically & Mentally Challenged' },
-                { key: "blind", value: 'Blind' },
-              ],
-            //   "isRequired":true,
-              "section": "Profile Details",
-          },
-         
-          {
-            "name": "religion",
-            "type": "dropdown",
-            "title": "Religion",
-            "dropdownData": [
-                { key: "christian", value: 'Christian' },
-                { key: "hindu", value: 'Hindu' },
-                { key: "jain", value: 'Jain' },
-                { key: "muslim", value: 'Muslim ' },
-                { key: "others", value: 'Others ' },
-                { key: "parsi", value: 'Parsi' },
-                { key: "sikh", value: 'Sikh' },
-              ],
-              "isRequired":true,
-              "section": "Profile Details",
-          },
- 
-          {
-            "name": "customer_category_code ",
-            "type": "dropdown",
-            "title": "Customer Category Code",
-            "dropdownData": [
-                { key: "options_to_be_provided_by_business", value: 'Options to be provided by Business' },
-              ],
-              "isRequired":true,
-              "section": "Profile Details",
-          },
- 
-          {
-            "name": "risk_category",
-            "type": "dropdown",
-            "title": "Risk Category ",
-            "dropdownData": [
-                { key: "high", value: 'High' },
-                { key: "medium", value: 'Medium' },
-                { key: "low", value: 'Low ' },
-              ],
-              "isRequired":true,
-              "section": "Profile Details",
-          },
- 
-        //   {
-        //     "name": "politically_exposed_person",
-        //     "type": "dropdown",
-        //     "title": "Politically Exposed Person ",
-        //     "dropdownData": [
-        //         { key: "", value: '' },
-        //         { key: "", value: '' },
-        //         { key: "", value: ' ' },
-        //         { key: "", value: ' ' },
-        //         { key: "", value: ' ' },
-        //         { key: "", value: '' },
-        //       ],
-        //       "isRequired":true,
-        //       "section": "Profile Details",
-        //   },
- 
-    ]
+        },
+
+        {
+          "name": "source_of_income",
+          "type": "dropdown",
+          "title": "Source Of Income",
+          "dropdownData": [
+              { key: "Agriculture", value: 'Agriculture' },
+              { key: "Business", value: 'Business' },
+              { key: "Salaried", value: 'Salaried' },
+              { key: "Others", value: 'Others' },
+              { key: "Pensioner", value: 'Pensioner' },
+            ],
+            "isRequired":true,
+            "section": "Profile Details",
+        },
+
+        {
+          "name": "annual_income_slab",
+          "type": "dropdown",
+          "title": "Annual Income Slab ",
+          "dropdownData": [
+              { key: "Less than 1 LPA", value: 'Less than 1 LPA' },
+              { key: "1-5 LPA", value: '1-5 LPA ' },
+              { key: "5-10 LPA  ", value: '5-10 LPA ' },
+              { key: "10-15 LPA", value: '10-15 LPA' },
+              { key: "15-25 LPA", value: '15-25 LPA ' },
+              { key: "More than 25 LPA", value: 'More than 25 LPA ' },
+            ],
+            "isRequired":true,
+            "section": "Profile Details",
+        },
+
+        {
+          "name": "politically_exposed_person",
+          "type": "dropdown",
+          "title": "Politically Exposed Person ",
+          "dropdownData": [
+              { key: "Domestic PEP", value: 'Domestic PEP' },
+              { key: "International PEP", value: 'International PEP' },
+              { key: "Relative of domestic PEP", value: 'Relative of Domestic PEP' },
+              { key: "Relative of International PEP", value: ' Relative of International PEP' },
+              { key: "Not a PEP", value: 'Not a PEP  ' },
+            ],
+            "isRequired":true,
+            "section": "Profile Details",
+        },
+
+        {
+          "name": "disability",
+          "type": "dropdown",
+          "title": "Disability",
+          "dropdownData": [
+              { key: "Physically challenged", value: 'Physically Challenged'},
+              { key: "Mentally challenged", value: 'Mentally Challenged'},
+              { key: "Physically & Mentally Challenged", value: 'Physically & Mentally Challenged' },
+              { key: "Blind", value: 'Blind' },
+            ],
+          //   "isRequired":true,
+            "section": "Profile Details",
+        },
+       
+        {
+          "name": "religion",
+          "type": "dropdown",
+          "title": "Religion",
+          "dropdownData": [
+              { key: "Christian", value: 'Christian' },
+              { key: "Hindu", value: 'Hindu' },
+              { key: "Jain", value: 'Jain' },
+              { key: "Muslim", value: 'Muslim ' },
+              { key: "Others", value: 'Others ' },
+              { key: "Parsi", value: 'Parsi' },
+              { key: "Sikh", value: 'Sikh' },
+            ],
+            "isRequired":true,
+            "section": "Profile Details",
+        },
+
+        {
+          "name": "customer_category_code ",
+          "type": "dropdown",
+          "title": "Customer Category Code",
+          "dropdownData": [
+              { key: "Options to be provided by business", value: 'Options to be provided by Business' },
+            ],
+            "isRequired":true,
+            "section": "Profile Details",
+        },
+
+        {
+          "name": "risk_category",
+          "type": "dropdown",
+          "title": "Risk Category ",
+          "dropdownData": [
+              { key: "High", value: 'High' },
+              { key: "Medium", value: 'Medium' },
+              { key: "Low", value: 'Low ' },
+            ],
+            "isRequired":true,
+            "section": "Profile Details",
+        },
+
+      //   {
+      //     "name": "politically_exposed_person",
+      //     "type": "dropdown",
+      //     "title": "Politically Exposed Person ",
+      //     "dropdownData": [
+      //         { key: "", value: '' },
+      //         { key: "", value: '' },
+      //         { key: "", value: ' ' },
+      //         { key: "", value: ' ' },
+      //         { key: "", value: ' ' },
+      //         { key: "", value: '' },
+      //       ],
+      //       "isRequired":true,
+      //       "section": "Profile Details",
+      //   },
+
+  ]
 }
