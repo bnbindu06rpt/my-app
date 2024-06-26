@@ -1,83 +1,201 @@
-export const documentDetailsFormData = {
+
  
-  "elements": [
-    {
-      "name": "photo",
-      "type": "ImagePicker",
-      "title": "Photo",
-      "placeholder": "Select Photo",
-      "order": 1,
-      "isRequired": true,
-      "section": "Document Details",
-      "fields": [ "document"]
-    },
-    {
-      "name": "signature",
-      "type": "ImagePicker",
-      "title": "Signature",
-      "placeholder": "Select Signature",
-      "order": 2,
-      "isRequired": true,
-      "section": "Document Details",
-      "fields": [ "document"]
-    },
-    {
-      "name": "pan_or_form_60",
-      "type": "ImagePicker",
-      "title": "PAN or Form 60",
-      "placeholder": "Select PAN or Form 60",
-      "order": 3,
-      "isRequired": true,
-      "section": "Document Details",
-      "fields": ["documentID",  "document"]
-    },
-    {
-      "name": "poa_if_not_aadhaar_authenticated",
-      "type": "ImagePicker",
-      "title": "POA, if not Aadhaar authenticated",
-      "placeholder": "Select POA",
-      "order": 4,
-      "section": "Document Details",
-      "fields": ["documentID", "document"]
-    },
-    {
-      "name": "mitc_document",
-      "type": "ImagePicker",
-      "title": "MITC Document",
-      "placeholder": "Select MITC Document",
-      "order": 5,
-      "section": "Document Details",
-      "fields": ["documentID", "document"]
-    },
-    {
-      "name": "communication_address_proof_or_declaration",
-      "type": "ImagePicker",
-      "title": "Communication Address Proof or Declaration",
-      "placeholder": "Select Communication Address Proof or Declaration",
-      "order": 6,
-      "section": "Document Details",
-      "fields": ["documentID", "document"]
-    },
-    {
-      "name": "miscellaneous_document",
-      "type": "ImagePicker",
-      "title": "Miscellaneous Document",
-      "placeholder": "Select Miscellaneous Document",
-      "order": 7,
-      "section": "Document Details",
-      "fields": ["documentID", "issuedDate", "expireDate", "document"]
-    },
-    {
-      "name": "passport_or_visa_for_nri_oci_foreigner",
-      "type": "ImagePicker",
-      "title": "Passport / Visa for NRI / OCI / Foreigner",
-      "placeholder": "Select Passport / Visa",
-      "order": 8,
-      "section": "Document Details",
-      "fields": ["documentID", "issuedDate", "expireDate", "document"]
-    },
-  ]
-};
+  export const documentDetailsFormData = {
+    "elements": [
+      {
+        "name": "signature",
+        "section": "Document Details",
+        "title": "Signature",
+        "fields": [  
+         
+          {
+            "name": "signature_document",
+            "type": "ImagePicker",
+            "title": "Document",
+            "placeholder": "Select Document",
+            "isRequired": true
+          }
+        ]
+      },
+      {
+        "name": "photo",
+        "section": "Document Details",
+        "title": "Photo",
+        "fields": [  
+         
+          {
+            "name": "photo_document",
+            "type": "ImagePicker",
+            "title": "Document",
+            "placeholder": "Select Document",
+            "isRequired": true
+          }
+        ]
+      },
+      {
+        "name": "pan_or_form_60",
+        "section": "Document Details",
+        "title": "PAN or Form 60",
+        "fields": [  
+          {
+            "name": "pan_or_form_60_id",
+            "type": "TextInput",
+            "title": "Document ID",
+            "placeholder": "Enter Document ID",
+            "isRequired": true
+          },
+          {
+            "name": "pan_or_form_60_document",
+            "type": "ImagePicker",
+            "title": "Document",
+            "placeholder": "Select Document",
+            "isRequired": true
+          },
+         
+        ]
+      },
+      {
+        "name": "poa_if_not_aadhaar_authenticated",
+        "section": "Document Details",
+        "title": "POA, if not Aadhaar authenticated",
+        "fields": [  
+          {
+            "name": "poa_if_not_aadhaar_authenticated_id",
+            "type": "TextInput",
+            "title": "Document ID",
+            "placeholder": "Enter Document ID",
+           
+          },
+          {
+            "name": "poa_if_not_aadhaar_authenticated_document",
+            "type": "ImagePicker",
+            "title": "Document",
+            "placeholder": "Select Document",
+           
+          },
+        ]
+      },
+      {
+        "name": "mitc",
+        "section": "Document Details",
+        "title": "MITC",
+        "fields": [  
+          {
+            "name": "mitc_document_id",
+            "type": "TextInput",
+            "title": "Document ID",
+            "placeholder": "Enter Document ID",
+           
+          },
+          {
+            "name": "mitc_document",
+            "type": "ImagePicker",
+            "title": "Document",
+            "placeholder": "Select Document",
+           
+          },
+        ]
+      },
+      {
+        "name": "communication_address_proof_or_declaration",
+        "section": "Document Details",
+        "title": "Communication Address Proof or Declaration",
+        "fields": [  
+          {
+            "name": "communication_address_proof_or_declaration_id",
+            "type": "TextInput",
+            "title": "Document ID",
+            "placeholder": "Enter Document ID",
+           
+          },
+          {
+            "name": "communication_address_proof_or_declaration_document",
+            "type": "ImagePicker",
+            "title": "Document",
+            "placeholder": "Select Document",
+           
+          },
+        ]
+      },
+      {
+        "name": "miscellaneous_document",
+        "section": "Document Details",
+        "title": "Miscellaneous Document",
+        "fields": [  
+          {
+            "name": "miscellaneous_document_id",
+            "type": "TextInput",
+            "title": "Document ID",
+            "placeholder": "Enter Document ID",
+            //"isRequired": true
+          },
+          {
+            "name": "miscellaneous_document_issuedate",
+            "type": "Date",
+            "title": "Issue Date",
+            "placeholder": "Select Issue Date",
+            //"isRequired": true
+          },
+          {
+            "name": "miscellaneous_document_expiredate",
+            "type": "Date",
+            "title": "Expire Date",
+            "placeholder": "Select Expire Date",
+            //"isRequired": true
+          },
+          {
+            "name": "miscellaneous_document_document",
+            "type": "ImagePicker",
+            "title": "Document",
+            "placeholder": "Select Document",
+            //"isRequired": true
+          },
+        ]
+      },
+      {
+        "name": "passport_or_visa_for_nri_oci_foreigner",
+        "section": "Document Details",
+        "title": "Passport / Visa for NRI / OCI / Foreigner",
+        "fields": [  
+          {
+            "name": "passport_or_visa_for_nri_oci_foreigner_id",
+            "type": "TextInput",
+            "title": "Document ID",
+            "placeholder": "Enter Document ID",
+            //"isRequired": true
+          },
+          {
+            "name": "passport_or_visa_for_nri_oci_foreigner_place_of_issue",
+            "type": "TextInput",
+            "title": "Place of Issue",
+            "placeholder": "Enter Place of Issue",
+            //"isRequired": true
+          },
+          {
+            "name": "passport_or_visa_for_nri_oci_foreigner_issuedate",
+            "type": "Date",
+            "title": "Issue Date",
+            "placeholder": "Select Issue Date",
+            //"isRequired": true
+          },
+          {
+            "name": "passport_or_visa_for_nri_oci_foreigner_expiredate",
+            "type": "Date",
+            "title": "Expire Date",
+            "placeholder": "Select Expire Date",
+            //"isRequired": true
+          },
+          {
+            "name": "passport_or_visa_for_nri_oci_foreigner_document",
+            "type": "ImagePicker",
+            "title": "Document",
+            "placeholder": "Select Document",
+            //"isRequired": true
+          },
+        ]
+      },
+    ]
+  }
 
 export const personalDetailsFormData = {
     "elements": [

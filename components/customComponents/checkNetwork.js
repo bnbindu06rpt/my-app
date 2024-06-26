@@ -18,7 +18,7 @@ export default function CheckNetwork() {
             {networkConnect ? (
                 <Text></Text>
             ) : (
-                <Text style={{ color: 'red' }}>No network connection</Text>
+                <Text style={{ color: 'red' }}>No network connection found!! You are Offline.</Text>
             )}
         </View>
     );

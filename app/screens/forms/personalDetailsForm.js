@@ -97,7 +97,7 @@ export default function PersonalDetailsForm() {
         updateFormData(formValues);
         await off.withTransactionAsync(async (tx) => {
           await off.runAsync(
-              `UPDATE Customerss
+              `UPDATE Customersss
                  SET
                   customer_type = ?,
                   product_options = ?,
@@ -126,7 +126,6 @@ export default function PersonalDetailsForm() {
                   formValues.number_of_applicants,
                   formValues.primary_holder_dob,
                   formValues.mode_of_operation,
-                 
                   formValues.middle_name,
                   formValues.first_name,
                   formValues.last_name,

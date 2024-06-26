@@ -59,7 +59,7 @@ export default function AddressDetailsForm() {
         console.log('Form data', customerForm);
         await off.withTransactionAsync(async (tx) => {
           await off.runAsync(
-              `UPDATE Customerss
+              `UPDATE Customersss
                SET
                   address_line_1 = ?,
                   address_line_2 = ?,

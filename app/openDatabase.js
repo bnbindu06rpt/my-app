@@ -132,12 +132,49 @@ export default function Database() {
   const DeleteData = (db) => {
     db.transaction(tx => {
       tx.executeSql(
-        `DELETE FROM "Customerss" WHERE uuid = ?;`,
-        ["3d141268-fa2e-4dae-a153-137e3b774afd"],
+        `DELETE FROM "CustomerDocuments"`,
+        ["5"],
         () => { console.log('Record deleted successfully'); },
         (tx, error) => { console.error('Error deleting record', error); }
       );
     });
+  }
+
+  const CreateDBTable=(db)=>{
+    db.transaction(tx => {
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS customerDocuments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_uuid TEXT,
+    pan_or_form_60_id TEXT,
+    poa_if_not_aadhaar_authenticated_id TEXT,
+    mitc_document_id TEXT,
+    communication_address_proof_or_declaration_id TEXT,
+    miscellaneous_document_id TEXT,
+    miscellaneous_document_issuedate TEXT,
+    miscellaneous_document_expiredate TEXT,
+    passport_or_visa_for_nri_oci_foreigner_id TEXT,
+    passport_or_visa_for_nri_oci_foreigner_place_of_issue TEXT,
+    passport_or_visa_for_nri_oci_foreigner_issuedate TEXT,
+    passport_or_visa_for_nri_oci_foreigner_expiredate TEXT,
+    signature_document_uri TEXT,
+    photo_document_uri TEXT,
+    pan_or_form_60_document_uri TEXT,
+    poa_if_not_aadhaar_authenticated_document_uri TEXT,
+    mitc_document_uri TEXT,
+    communication_address_proof_or_declaration_document_uri TEXT,
+    miscellaneous_document_document_uri TEXT,
+    passport_or_visa_for_nri_oci_foreigner_document_uri TEXT,
+    FOREIGN KEY (customer_uuid) REFERENCES Customerss(uuid)
+);
+
+      `,
+        [],
+        () => { console.log('Document table created successfully'); },
+        (tx, error) => { console.error('Error creating Document table', error); }
+      );
+    });
+
   }
   
  
@@ -298,6 +335,7 @@ export default function Database() {
       <Button title="View Data" onPress={() => getData(db)} />
       <Button title="Craete table" onPress={() => createTable(db)} />
       <Button title="Delete data" onPress={() => DeleteData(db)} />
+      <Button title="Create DB table" onPress={() => CreateDBTable(db)} />
     </View>
   );
 }
