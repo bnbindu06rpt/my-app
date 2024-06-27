@@ -197,7 +197,7 @@
     ]
   }
 
-export const personalDetailsFormData = {
+  export const personalDetailsFormData = {
     "elements": [
       {
         "name": "first_name",
@@ -207,6 +207,9 @@ export const personalDetailsFormData = {
         "isRequired": true,
         "section": "Personal Details",
         "order": 1,
+        "validation": {
+          "required": "First Name is required"
+        }
       },
       {
         "name": "middle_name",
@@ -224,6 +227,9 @@ export const personalDetailsFormData = {
         "isRequired": true,
         "section": "Personal Details",
         "order": 3,
+        "validation": {
+          "required": "Last Name is required"
+        }
       },
       {
         "name": "gender",
@@ -237,13 +243,15 @@ export const personalDetailsFormData = {
         "isRequired": true,
         "section": "Personal Details",
         "order": 4,
+        "validation": {
+          "required": "Gender is required"
+        }
       },
       {
         "name": "date_of_birth",
         "type": "Date",
         "title": "DOB",
         "placeholder": "DOB",
-        // "isRequired": true,
         "section": "Personal Details",
         "order": 5,
       },
@@ -255,6 +263,9 @@ export const personalDetailsFormData = {
         "isRequired": true,
         "section": "Personal Details",
         "order": 6,
+        "validation": {
+          "required": "Place of Birth is required"
+        }
       },
       {
         "name": "mother_name",
@@ -264,6 +275,9 @@ export const personalDetailsFormData = {
         "isRequired": true,
         "section": "Personal Details",
         "order": 7,
+        "validation": {
+          "required": "Mother's Name is required"
+        }
       },
       {
         "name": "father_name",
@@ -273,20 +287,26 @@ export const personalDetailsFormData = {
         "isRequired": true,
         "section": "Personal Details",
         "order": 8,
+        "validation": {
+          "required": "Father's Name is required"
+        }
       },
       {
         "name": "primary_mobile_number",
-        "type": "TextInput",
+        "type": "phone",
         "inputType":"phone",
         "title": "Primary Mobile Number",
         "placeholder": "Enter Primary Mobile Number",
-        // "validation": {
-        //     "regex": /^\d{10}$/,
-        //     "message": "Please enter a valid 10-digit phone number."
-        //   },
         "isRequired": true,
         "section": "Personal Details",
         "order": 9,
+        "validation": {
+          "required": "Primary Mobile Number is required",
+          "pattern": {
+            "value": "^\\d{10}$",
+            "message": "Please enter a valid 10-digit phone number."
+          }
+        }
       },
       {
         "name": "alternate_mobile_number",
@@ -294,39 +314,44 @@ export const personalDetailsFormData = {
         "inputType":"phone",
         "title": "Alternate Mobile Number",
         "placeholder": "Enter Alternate Mobile Number",
-        // "validation": {
-        //     "regex": /^\d{10}$/,
-        //     "message": "Please enter a valid 10-digit phone number."
-        //   },
         "section": "Personal Details",
         "order": 10,
+        "validation": {
+          "pattern": {
+            "value": "^\\d{10}$",
+            "message": "Please enter a valid 10-digit phone number."
+          }
+        }
       },
       {
         "name": "email_id",
         "type": "TextInput",
         "title": "Email ID",
         "placeholder": "Enter Email ID",
-        // "validation": {
-        //     "regex": /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        //     "message": "Please enter a valid email address.",
-            
-        //   },
         "isRequired": true,
         "section": "Personal Details",
         "order": 11,
+        "validation": {
+          "required": "Email ID is required",
+          "pattern": {
+            "value": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+            "message": "Please enter a valid email address."
+          }
+        }
       },
       {
         "name": "alternate_email_id",
         "type": "TextInput",
         "title": "Alternate Email ID",
         "placeholder": "Enter Alternate Email ID",
-        // "validation": {
-        //     "regex": /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        //     "message": "Please enter a valid email address.",
-            
-        //   },
         "section": "Personal Details",
         "order": 12,
+        "validation": {
+          "pattern": {
+            "value": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+            "message": "Please enter a valid email address."
+          }
+        }
       },
       {
         "name": "marital_status",
@@ -342,6 +367,9 @@ export const personalDetailsFormData = {
         "isRequired": true,
         "section": "Personal Details",
         "order": 13,
+        "validation": {
+          "required": "Marital Status is required"
+        }
       },
       {
         "name": "ckyc_number",
@@ -350,270 +378,233 @@ export const personalDetailsFormData = {
         "placeholder": "Enter CKYC Number",
         "section": "Personal Details ",
         "order": 14,
+      }
+    ]
+  };
+
+
+  
+  export const addressDetailsFormData = {
+    "elements": [
+      {
+        "name": "permanent_address_line_1",
+        "type": "TextInput",
+        "title": "Address Line 1",
+        "placeholder": "Enter Address",
+        "isRequired": true,
+        "section": "Permanent Address Type",
+      },
+      {
+        "name": "permanent_address_line_2",
+        "type": "TextInput",
+        "title": "Address Line 2",
+        "placeholder": "Enter Address",
+        "isRequired": true,
+        "section": "Permanent Address Type",
+      },
+      {
+        "name": "permanent_address_line_3",
+        "type": "TextInput",
+        "title": "Address Line 3",
+        "placeholder": "Enter Address",
+        "isRequired": true,
+        "section": "Permanent Address Type",
+      },
+      {
+        "name": "permanent_pincode",
+        "type": "TextInput",
+        "title": "Pincode",
+        "placeholder": "Enter Pincode",
+        "isRequired": true,
+        "section": "Permanent Address Type",
+      },
+      {
+        "name": "permanent_district",
+        "type": "TextInput",
+        "title": "District",
+        "placeholder": "Enter District",
+        "isRequired": true,
+        "section": "Permanent Address Type",
+      },
+      {
+        "name": "permanent_state",
+        "type": "TextInput",
+        "title": "State",
+        "placeholder": "Enter State",
+        "isRequired": true,
+        "section": "Permanent Address Type",
+      },
+      {
+        "name": "permanent_country",
+        "type": "dropdown",
+        "title": "Country",
+        "dropdownData": [
+          { key: "india", value: 'India' },
+        ],
+        "isRequired": true,
+        "section": "Permanent Address Type",
+      },
+      {
+        "name": "overseas_same_as_permanent_address",
+        "type": "checkbox",
+        "title": "Same As Permanent Address",
+        "section": "Overseas Address",
+      },
+      {
+        "name": "overseas_address_type",
+        "type": "dropdown",
+        "title": "Address Type",
+        "dropdownData": [
+          { key: "business", value: "Business" },
+          { key: "registered_office", value: "Registered Office" },
+          { key: "residential", value: "Residential" },
+          { key: "unspecified", value: "Unspecified" },
+          { key: "resident", value: "Resident/Business" },
+        ],
+        "isRequired": true,
+        "section": "Overseas Address",
+      },
+      {
+        "name": "overseas_address_line_1",
+        "type": "TextInput",
+        "title": "Address Line 1",
+        "placeholder": "Enter Address",
+        "isRequired": true,
+        "section": "Overseas Address",
+      },
+      {
+        "name": "overseas_address_line_2",
+        "type": "TextInput",
+        "title": "Address Line 2",
+        "placeholder": "Enter Address",
+        "isRequired": true,
+        "section": "Overseas Address",
+      },
+      {
+        "name": "overseas_address_line_3",
+        "type": "TextInput",
+        "title": "Address Line 3",
+        "placeholder": "Enter Address",
+        "section": "Overseas Address",
+      },
+      {
+        "name": "overseas_pincode",
+        "type": "TextInput",
+        "title": "Pincode",
+        "placeholder": "Enter Pincode",
+        "section": "Overseas Address",
+      },
+      {
+        "name": "overseas_city",
+        "type": "TextInput",
+        "title": "City",
+        "placeholder": "Enter City",
+        "isRequired": true,
+        "section": "Overseas Address",
+      },
+      {
+        "name": "overseas_country",
+        "type": "dropdown",
+        "title": "Country",
+        "dropdownData": [
+          { key: "india", value: 'India' },
+        ],
+        "isRequired": true,
+        "section": "Overseas Address",
+      },
+      {
+        "name": "communication_same_as_permanent_address",
+        "type": "checkbox",
+        "title": "Same As Permanent Address",
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_same_as_overseas_address",
+        "type": "checkbox",
+        "title": "Same As Overseas Address",
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_address_preference",
+        "type": "RadioButton",
+        "title": "Address Preference",
+        "radioData": [
+          { key: "local", value: "Local" },
+          { key: "foreign", value: "Foreign" }
+        ],
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_address_type",
+        "type": "dropdown",
+        "title": "Address Type",
+        "dropdownData": [
+          { key: "business", value: "Business" },
+          { key: "registered_office", value: "Registered Office" },
+          { key: "residential", value: "Residential" },
+          { key: "unspecified", value: "Unspecified" },
+          { key: "resident", value: "Resident/Business" },
+        ],
+        "isRequired": true,
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_address_line_1",
+        "type": "TextInput",
+        "title": "Address Line 1",
+        "placeholder": "Enter Address",
+        "isRequired": true,
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_address_line_2",
+        "type": "TextInput",
+        "title": "Address Line 2",
+        "placeholder": "Enter Address",
+        "isRequired": true,
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_address_line_3",
+        "type": "TextInput",
+        "title": "Address Line 3",
+        "placeholder": "Enter Address",
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_pincode",
+        "type": "TextInput",
+        "title": "Pincode",
+        "placeholder": "Enter Pincode",
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_district",
+        "type": "TextInput",
+        "title": "District",
+        "placeholder": "Enter District",
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_state",
+        "type": "TextInput",
+        "title": "State",
+        "placeholder": "Enter State",
+        "isRequired": true,
+        "section": "Communication Address",
+      },
+      {
+        "name": "communication_country",
+        "type": "dropdown",
+        "title": "Country",
+        "dropdownData": [
+          { key: "india", value: 'India' },
+        ],
+        "isRequired": true,
+        "section": "Communication Address",
       },
     ]
   };
-  
-
-export const addressDetailsFormData = {
-    "elements" : [
-        {
-            "name": "address_line_1",
-            "type": "TextInput",
-            "title": "Address Line 1",
-            "placeholder": "Enter Address",
-            "isRequired":true,
-            "section": "Permanent Address Type",
-          },
-
-          {
-            "name": "address_line_2",
-            "type": "TextInput",
-            "title": "Address Line 2",
-            "placeholder": "Enter Address",
-            "isRequired":true,
-            "section": "Permanent Address Type",
-          },
-
-          {
-            "name": "address_line_3",
-            "type": "TextInput",
-            "title": "Address Line 3",
-            "placeholder": "Enter Address",
-            "isRequired":true,
-            "section": "Permanent Address Type",
-          },
-
-          {
-            "name": "pincode",
-            "type": "TextInput",
-            "title": "Pincode",
-            "placeholder": "Enter Pincode",
-            "isRequired":true,
-            "section": "Permanent Address Type",
-          },
-
-          {
-            "name": "district",
-            "type": "TextInput",
-            "title": "District",
-            "placeholder": "Enter District",
-            "isRequired":true,
-            "section": "Permanent Address Type",
-          },
-
-          {
-            "name": "state",
-            "type": "TextInput",
-            "title": "State",
-            "placeholder": "Enter State",
-            "isRequired":true,
-            "section": "Permanent Address Type",
-          },
-
-          {
-            "name": "country",
-            "type": "dropdown",
-            "title": "Country",
-            "dropdownData": [
-                { key: "india", value: 'India' },
-        
-              ],
-              "isRequired":true,
-              "section": "Permanent Address Type",
-
-          },
-
-          {
-            "name": "same_as_permanent_address",
-            "type": "checkbox",
-            "title": "Same As Permanent Address",
-            "section":"Overseas Address",
-
-          },
-
-          {
-            "name": "address_type",
-            "type": "dropdown",
-            "title": "Address Type",
-            "dropdownData": [
-                { key: "business", value: "Business" },
-                { key: "registered_office", value:"Registered Office" },
-                { key: "residential", value: "Residential" },
-                { key: "unspecified", value: "Unspecified" },
-                { key: "resident", value: "Resident/Business" },
-        
-              ],
-              "isRequired":true,
-              "section": "Overseas Address",
-
-          },
-
-          {
-            "name": "address_line_1",
-            "type": "TextInput",
-            "title": "Address Line 1",
-            "placeholder": "Enter Address",
-            "isRequired":true,
-            "section": "Overseas Address",
-          },
-
-          {
-            "name": "address_line_2",
-            "type": "TextInput",
-            "title": "Address Line 2",
-            "placeholder": "Enter Address",
-            "isRequired":true,
-            "section": "Overseas Address",
-          },
-
-          {
-            "name": "address_line_3",
-            "type": "TextInput",
-            "title": "Address Line 3",
-            "placeholder": "Enter Address",
-            "section": "Overseas Address",
-          },
-
-          {
-            "name": "pincode",
-            "type": "TextInput",
-            "title": "Pincode",
-            "placeholder": "Enter Pincode",
-            "section": "Overseas Address",
-          },
-
-          {
-            "name": "city",
-            "type": "TextInput",
-            "title": "City",
-            "placeholder": "Enter City",
-            "isRequired":true,
-            "section": "Overseas Address",
-          },
-
-          {
-            "name": "country",
-            "type": "dropdown",
-            "title": "Country",
-            "dropdownData": [
-                { key: "India", value: 'India' },
-        
-              ],
-              "isRequired":true,
-              "section": "Overseas Address",
-
-          },
-          {
-
-          "name": "same_as_permanent_address",
-          "type": "checkbox",
-          "title": "Same As Permanent Address",
-          "section":"Communication Address",
-        },
-        {
-          
-            "name": "same_as_overseas_address",
-            "type": "checkbox",
-            "title": "Same As Overseas Address",
-            "section":"Communication Address",  
-        },
-        {
-            "name": "address_preference",
-            "type":"RadioButton",
-            "title": "Address Preference",
-            "radioData":[
-                {key:"Local", value:"Local" },
-                {key:"Foreign",value:"Foreign"}
-    
-            ],
-            "section":"Communication Address",
-          },
-
-          {
-            "name": "address_type",
-            "type": "dropdown",
-            "title": "Address Type",
-            "dropdownData": [
-                { key: "Business", value: "Business" },
-                { key: "Registered office", value:"Registered Office" },
-                { key: "Residential", value: "Residential" },
-                { key: "Unspecified", value: "Unspecified" },
-                { key: "Resident", value: "Resident/Business" },
-        
-              ],
-              "isRequired":true,
-              "section": "Communication Address",
-
-          },
-
-          {
-            "name": "address_line_1",
-            "type": "TextInput",
-            "title": "Address Line 1",
-            "placeholder": "Enter Address",
-            "isRequired":true,
-            "section": "Communication Address",
-          },
-
-          {
-            "name": "address_line_2",
-            "type": "TextInput",
-            "title": "Address Line 2",
-            "placeholder": "Enter Address",
-            "isRequired":true,
-            "section": "Communication Address",
-          },
-
-          {
-            "name": "address_line_3",
-            "type": "TextInput",
-            "title": "Address Line 3",
-            "placeholder": "Enter Address",
-            "section": "Communication Address",
-          },
-
-          {
-            "name": "pincode",
-            "type": "TextInput",
-            "title": "Pincode",
-            "placeholder": "Enter Pincode",
-            "section": "Communication Address",
-          },
-
-          {
-            "name": "district",
-            "type": "TextInput",
-            "title": "District",
-            "placeholder": "Enter District",
-            "section": "Communication Address",
-          },
-
-          {
-            "name": "state",
-            "type": "TextInput",
-            "title": "State",
-            "placeholder": "Enter State",
-            "isRequired":true,
-            "section": "Communication Address",
-          },
-
-          {
-            "name": "country",
-            "type": "dropdown",
-            "title": "Country",
-            "dropdownData": [
-                { key: "India", value: 'India' },
-        
-              ],
-              "isRequired":true,
-              "section": "Communication Address",
-
-          },
-
-    ]
-}
-
 export const profileDetailsFormData = {
   "elements" : [
       {
@@ -623,14 +614,18 @@ export const profileDetailsFormData = {
           "placeholder": "Enter PAN Number",
           "isRequired":true,
           "section": "Profile Details",
+         
         },
 
-        {
-          "name": "no_pan",
-          "type": "checkbox",
-          "title": "Don't have Pan?",
-          "section": "Profile Details",
-        },
+        // {
+        //   "name": "no_pan",
+        //   "type": "checkbox",
+        //   "title": "Don't have Pan?",
+        //   "section": "Profile Details",
+        //   "validation": {
+        //     "required": "First Name is required"
+        //   }
+        // },
 
         {
           "name": "educational_qualification",
@@ -648,6 +643,9 @@ export const profileDetailsFormData = {
             ],
             "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Educational Qualifiaction is required"
+            }
         },
 
         {
@@ -666,6 +664,9 @@ export const profileDetailsFormData = {
             ],
             "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Occupation is required"
+            }
         },
 
         {
@@ -681,6 +682,9 @@ export const profileDetailsFormData = {
             ],
             "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Source Of Income is required"
+            }
         },
 
         {
@@ -697,12 +701,15 @@ export const profileDetailsFormData = {
             ],
             "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Annual Income Slab is required"
+            }
         },
 
         {
           "name": "politically_exposed_person",
           "type": "dropdown",
-          "title": "Politically Exposed Person ",
+          "title": "Politically Exposed Person",
           "dropdownData": [
               { key: "Domestic PEP", value: 'Domestic PEP' },
               { key: "International PEP", value: 'International PEP' },
@@ -712,6 +719,9 @@ export const profileDetailsFormData = {
             ],
             "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Politically Exposed Person is required"
+            }
         },
 
         {
@@ -726,6 +736,9 @@ export const profileDetailsFormData = {
             ],
           //   "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Disability is required"
+            }
         },
        
         {
@@ -743,6 +756,9 @@ export const profileDetailsFormData = {
             ],
             "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Religion is required"
+            }
         },
 
         {
@@ -754,6 +770,9 @@ export const profileDetailsFormData = {
             ],
             "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Customer Category Code is required"
+            }
         },
 
         {
@@ -767,6 +786,9 @@ export const profileDetailsFormData = {
             ],
             "isRequired":true,
             "section": "Profile Details",
+            "validation": {
+              "required": "Risk Category is required"
+            }
         },
 
       //   {
@@ -784,6 +806,94 @@ export const profileDetailsFormData = {
       //       "isRequired":true,
       //       "section": "Profile Details",
       //   },
+
+  ]
+}
+
+export const searchCustomerFormData = {
+  "elements" : [
+    {
+      "customer_id":[
+        {
+      
+          "name": "customer_id",
+          "type": "TextInput",
+          "title": "Customer ID ",
+          "isRequired":true,
+          "placeholder": "Enter Customer ID",
+          "validation": {
+            "required": "Customer ID is required"
+          }
+
+      },
+
+    ],
+    "customer_name":[
+      {
+      
+        "name": "customer_name",
+        "type": "TextInput",
+        "title": "Customer Name",
+        "isRequired":true,
+        "placeholder": "Enter Customer Name",
+        "validation": {
+          "required": "Customer Name is required"
+        }
+
+    },
+    {
+      "name": "dob",
+      "type": "Date",
+      "title": "Customer DOB",
+      "isRequired":true,
+      "placeholder": "Enter Customer DOB",
+      "validation": {
+        "required": "Customer DOB is required"
+      }
+    }
+    ],
+    "mobile_number":[
+      {
+        "name": "mobile_number",
+        "type": "tel",
+        "title": "Mobile Number",
+        "isRequired":true,
+        "placeholder": "Enter Mobile Number",
+       "validation": {
+          "required": "Mobile Number is required",
+          "pattern": {
+            "value": "^\\d{10}$",
+            "message": "Please enter a valid 10-digit phone number."
+          }
+        }
+
+      }
+    ],
+    "pan":[
+      {
+      
+        "name": "pan",
+        "type": "TextInput",
+        "title": "Enter PAN number",
+        "isRequired":true,
+        "placeholder": "Enter PAN Number",
+        "validation": {
+          "required": "PAN Number is required",
+          "pattern": {
+            "value": "^\\d{10}$",
+            "message": "Please enter a valid 10-digit PAN number."
+          }
+        }
+
+    },
+
+    
+
+    ]
+
+
+    }
+    
 
   ]
 }

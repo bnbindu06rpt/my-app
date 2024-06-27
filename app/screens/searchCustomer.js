@@ -81,18 +81,18 @@ const SearchScreen = () => {
     { label: 'Customer ID', value: 'customerId' },
     { label: 'Customer Full Name', value: 'customerFullName' },
     { label: 'Mobile Number', value: 'mobileNumber' },
-    { label: 'PAN', value: 'pan' },
+    { label: 'PAN', value: 'PAN' },
     { label: 'Proof of Address', value: 'proofOfAddress' },
     { label: 'CKYC Number', value: 'ckycNumber' },
   ];
  
   const proofTypes = [
-    { label: 'Aadhar', value: 'aadhar' },
-    { label: 'Driver’s License', value: 'driverLicense' },
-    { label: 'Job Contract', value: 'jobContract' },
-    { label: 'NREGA', value: 'nrega' },
-    { label: 'Passport', value: 'passport' },
-    { label: ' Voters ID Card', value: 'votersIdCard' },
+    { label: 'Aadhar', value: 'Aadhar' },
+    { label: 'Driver’s License', value: 'Driver License' },
+    { label: 'Job Contract', value: 'Job Contract' },
+    { label: 'NREGA', value: 'NREGA' },
+    { label: 'Passport', value: 'Passport' },
+    { label: ' Voters ID Card', value: 'Voters ID Card' },
   ];
  
   LogBox.ignoreAllLogs();
@@ -127,7 +127,8 @@ const SearchScreen = () => {
           </View>
         )}
         {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-        <Button title="Search" onPress={handleSearch} disabled={isSearching} color='#00408F' />
+        <View style={styles.searchButton}><Button title="Search" onPress={handleSearch} disabled={isSearching} color='#00408F' /></View>
+        
         {isSearching && <ActivityIndicator size="large" color="#0000ff" />}
         {noMatchFound && <Text style={styles.noMatchText}>No match found</Text>}
         {showContinueButton && <Button title="Continue" onPress={handleContinue} color='#00408F' />}
@@ -207,7 +208,7 @@ const InputFields = ({
     ) : (
       <TextInput
         style={styles.input}
-        placeholder={`Enter ${selectedOption.replace(/([A-Z])/g, ' $1').toLowerCase()}`}
+        placeholder={`Enter ${selectedOption.replace(/([A-Z])/g, '$1').toLowerCase()}`}
         value={searchValue}
         onChangeText={setSearchValue}
       />
@@ -225,8 +226,9 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 20,
-    marginBottom: 10,
+    paddingHorizontal: 35,
+    paddingVertical:10,
+    marginBottom: 5,
     elevation: 3,
     shadowColor: '#000',
     shadowOpacity: 0.2,
@@ -236,20 +238,25 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 4,
+
+    },
+    searchButton:{
+      marginTop:20
+
     },
     title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 20, // Added space below the header
-    marginBottom: 10,
+    marginTop: 10, // Added space below the header
+    marginBottom: 2,
     color: 'black',
     textAlign: 'center', // Center-align text
     width: '90%', // Adjust width to center within the screen
     },
     subtitle: {
     fontSize: 14,
-    marginBottom: 30,
+    marginBottom: 4,
     color: 'black',
     textAlign: 'center', // Center-align text
     width: '90%', // Adjust width to center within the screen
@@ -262,12 +269,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     },
     input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    borderRadius: 5,
+      borderBottomWidth: 1,
+      borderBottomColor: '#ccc',
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      fontSize: 14,
+      borderWidth: 0,
     },
     errorText: {
     color: 'red',

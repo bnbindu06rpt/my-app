@@ -211,7 +211,7 @@ export default function ProductType() {
        
         <View style={styles.mainContainer}>
             <Header backPath={'screens/forms/newApplicationOptions'} />
-            <Database/>
+            {/* <Database/> */}
             
             <Text style={styles.text}>Select Customer Type and Product</Text>
             <ScrollView contentContainerStyle={styles.scrollContainer}>

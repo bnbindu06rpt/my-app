@@ -11,6 +11,7 @@ import { themeColor } from '../../../constants/constants';
 import { DropdownIcon, DropupIcon } from '../../../assets/images/assets';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import Header from '../../../components/customComponents/header';
+import Form from './form';
  
 export default function ProfileDetailsForm() {
   const [validationErrors, setValidationErrors] = useState({});
@@ -193,7 +194,8 @@ export default function ProfileDetailsForm() {
   return (
     <View style={styles.container}>
       <Header backPath="screens/forms/addressDetailsForm" />
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <Form elements={profileDetailsFormData.elements}/>
+      {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <View style={styles.card}>
           <View style={styles.section}>
             {Object.keys(isCollapsed).map((section, index) => (
@@ -216,7 +218,7 @@ export default function ProfileDetailsForm() {
       </ScrollView>
       <View style={styles.buttonContainer}>
         <Button title="Save and Continue" onPress={onSubmit} color={themeColor} />
-      </View>
+      </View> */}
     </View>
   );
 }
