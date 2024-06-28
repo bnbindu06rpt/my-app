@@ -177,9 +177,6 @@ export default function ProductType() {
                         primary_holder_dob,
                         uuid,
                         mode_of_operation
-                       
-                        
-                        
                         
                     ) VALUES (?, ?, ?, ?, ?,?,?);`,
                     [   
@@ -199,7 +196,7 @@ export default function ProductType() {
            await getData();
            updateFormData(formData);
            
-            router.navigate('/screens/forms/personalDetailsForm');
+            router.navigate('/screens/searchCustomer');
         } catch (error) {
             console.error('Error saving form data:', error);
             router.navigate('/screens/forms/personalDetailsForm');
@@ -210,7 +207,7 @@ export default function ProductType() {
     return (
        
         <View style={styles.mainContainer}>
-            <Header backPath={'screens/forms/newApplicationOptions'} />
+            <Header backPath={'screens/searchCustomer'} />
             {/* <Database/> */}
             
             <Text style={styles.text}>Select Customer Type and Product</Text>

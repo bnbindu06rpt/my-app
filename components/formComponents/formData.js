@@ -811,89 +811,122 @@ export const profileDetailsFormData = {
 }
 
 export const searchCustomerFormData = {
-  "elements" : [
-    {
-      "customer_id":[
-        {
-      
-          "name": "customer_id",
-          "type": "TextInput",
-          "title": "Customer ID ",
-          "isRequired":true,
-          "placeholder": "Enter Customer ID",
-          "validation": {
-            "required": "Customer ID is required"
-          }
-
+  elements: {
+    "Customer ID": [
+      {
+        name: "customer_id",
+        type: "TextInput",
+        title: "Customer ID",
+        isRequired: true,
+        placeholder: "Enter Customer ID",
+        validation: {
+          required: "Customer ID is required",
+        },
       },
-
     ],
-    "customer_name":[
+    "Customer Full Name": [
       {
-      
-        "name": "customer_name",
-        "type": "TextInput",
-        "title": "Customer Name",
-        "isRequired":true,
-        "placeholder": "Enter Customer Name",
-        "validation": {
-          "required": "Customer Name is required"
-        }
-
-    },
-    {
-      "name": "dob",
-      "type": "Date",
-      "title": "Customer DOB",
-      "isRequired":true,
-      "placeholder": "Enter Customer DOB",
-      "validation": {
-        "required": "Customer DOB is required"
-      }
-    }
+        name: "customer_name",
+        type: "TextInput",
+        title: "Customer Name",
+        isRequired: true,
+        placeholder: "Enter Customer Name",
+        validation: {
+          required: "Customer Name is required",
+        },
+      },
+      {
+        name: "dob",
+        type: "Date",
+        title: "Customer DOB",
+        isRequired: true,
+        placeholder: "Enter Customer DOB",
+        validation: {
+          required: "Customer DOB is required",
+        },
+      },
     ],
-    "mobile_number":[
+    "Mobile Number": [
       {
-        "name": "mobile_number",
-        "type": "tel",
-        "title": "Mobile Number",
-        "isRequired":true,
-        "placeholder": "Enter Mobile Number",
-       "validation": {
-          "required": "Mobile Number is required",
-          "pattern": {
-            "value": "^\\d{10}$",
-            "message": "Please enter a valid 10-digit phone number."
-          }
-        }
-
-      }
+        name: "mobile_number",
+        type: "phone",
+        title: "Mobile Number",
+        isRequired: true,
+        placeholder: "Enter Mobile Number",
+        validation: {
+          required: "Mobile Number is required",
+          pattern: {
+            value: /^\\d{12}$/,
+            message: "Please enter a valid 10-digit phone number.",
+          },
+        },
+      },
     ],
-    "pan":[
+    "PAN": [
       {
-      
-        "name": "pan",
-        "type": "TextInput",
-        "title": "Enter PAN number",
-        "isRequired":true,
-        "placeholder": "Enter PAN Number",
-        "validation": {
-          "required": "PAN Number is required",
-          "pattern": {
-            "value": "^\\d{10}$",
-            "message": "Please enter a valid 10-digit PAN number."
-          }
-        }
-
-    },
-
+        name: "pan",
+        type: "TextInput",
+        title: "Enter PAN number",
+        isRequired: true,
+        placeholder: "Enter PAN Number",
+        validation: {
+          required: "PAN Number is required",
+          pattern: {
+            value: /^([A-Z]){5}([0-9]){4}([A-Z]){1}$/,
+            message: "Please enter a valid 10-character PAN number.",
+          },
+        },
+      },
+    ],
+    "Proof of Address": [
     
+      {
+        name: "proof_category",
+        type: "dropdown",
+        title: "Proof Category",
+        dropdownData: [
+          { key: 'Aadhar', value: 'Aadhar' },
+          { key: 'Driver’s License', value: 'Driver License' },
+          { key: 'Job Contract', value: 'Job Contract' },
+          { key: 'NREGA', value: 'NREGA' },
+          { key: 'Passport', value: 'Passport' },
+          { key: 'Voters ID Card', value: 'Voters ID Card' },
+        ],
+        isRequired: true,
+        section: "Profile Details",
+        validation: {
+          required: "Risk Category is required",
+        },
+      },
+      {
+        name: "proof_id",
+        type: "TextInput",
+        title: "Enter Proof Of ID",
+        isRequired: true,
+        placeholder: "Enter Proof ID",
+        validation: {
+          required: "Proof ID is required",
+        },
+      },
+    ],
+    "CKYC Number":[{
+      name: "CKYC Number",
+      type: "TextInput",
+      title: "Enter CKYC Number",
+      isRequired: true,
+      placeholder: "Enter CKYC Number",
+      validation: {
+        required: "CKYC Number is required",
+        pattern:{
+          value:/^[a-zA-Z0-9]{14}$/,
+          message:"Enter a valid CKYC number"
 
-    ]
-
-
-    }
-    
-
+        }
+        
+      
+      },
+    },
   ]
-}
+  },
+  
+};

@@ -237,6 +237,15 @@ const FormField = ({ control, name, type, title, placeholder, validation, dropdo
     // Update the form field value
     control.setValue(name, date.toDateString());
   };
+  function extractDate(timestamp) {
+    const dateObject = new Date(timestamp);
+    const year = dateObject.getFullYear();
+    const month = dateObject.getMonth() + 1;
+    const date = dateObject.getDate();
+    const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
+    return formattedDate;
+  }
+ 
 
   const renderInput = (error, onBlur, onChange, value) => {
     switch (type) {
@@ -288,21 +297,31 @@ const FormField = ({ control, name, type, title, placeholder, validation, dropdo
         );
       case 'dropdown':
         return (
-          <View style={styles.inputContainer}>
+         
             <SelectList
               boxStyles={{
                 borderBottomWidth: 1,
-                borderBottomColor: '#ccc',
+                borderBottomColor: 'red',
                 paddingVertical: 10,
                 paddingHorizontal: 10,
                 fontSize: 16,
                 borderWidth: 0,
               }}
+              dropdownStyles={{
+                paddingTop:-10,
+              
+
+              }}
+              dropdownTextStyles={{
+
+                marginBottom:-8,
+                
+              }}
               setSelected={label => onChange(label)}
               data={dropdownData.map(item => ({ value: item.key, label: item.value }))}
               save="value"
             />
-          </View>
+        
         );
       case 'RadioButton':
         return (
@@ -323,7 +342,7 @@ const FormField = ({ control, name, type, title, placeholder, validation, dropdo
             <Pressable onPress={() => setShowCalendarModal(true)}>
               <View style={styles.dateInput}>
                 <Text style={styles.dateText}>
-                  {value ? value : 'Select date '}
+                  {selectedDate ? extractDate(selectedDate) : 'Select date '}
                 </Text>
                 <Ionicons name='calendar' size={20} color='black' style={styles.icon} />
               </View>
@@ -398,7 +417,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 'bold',
         color: '#00408F',
-        paddingLeft:10
+        paddingLeft:10,
+        marginTop:13
       },
       phoneContainer: {
         borderBottomWidth: 1,
@@ -408,6 +428,7 @@ const styles = StyleSheet.create({
  
   inputContainer: {
     marginBottom: 8,
+    marginTop:3
   },
   dateInput: {
     flexDirection: 'row',
@@ -415,7 +436,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: 'black',
   },
   icon: {
     marginLeft: 'auto',
@@ -426,7 +447,7 @@ const styles = StyleSheet.create({
   },
   input:{
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: 'black',
     paddingVertical: 10,
     paddingHorizontal: 10,
     fontSize: 14,
