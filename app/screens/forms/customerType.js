@@ -163,6 +163,7 @@ export default function ProductType() {
             account_under_guardian: accountUnderGuardian ? 1 : 0,
             uuid:uuidno
         };
+        updateFormData(formData)
        
         try {
        

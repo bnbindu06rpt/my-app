@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Button, Pressable, LogBox } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Collapsible from 'react-native-collapsible';
@@ -12,6 +12,8 @@ import { DropdownIcon, DropupIcon } from '../../../assets/images/assets';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import Header from '../../../components/customComponents/header';
 import Form from './form';
+import CheckNetwork from '../../../components/customComponents/checkNetwork';
+import { useNetInfo } from '@react-native-community/netinfo';
  
 export default function ProfileDetailsForm() {
   const [validationErrors, setValidationErrors] = useState({});
@@ -26,175 +28,46 @@ export default function ProfileDetailsForm() {
   });
  
   console.disableYellowBox = true;
+  const [networkConnect, setNetworkConnect] = useState(false);
  
   const toggleSection = (section) => {
     setIsCollapsed({ ...isCollapsed, [section]: !isCollapsed[section] });
   };
+
+  
  
   const onSubmit = async () => {
-    const errors = validateForm();
+   // const errors = validateForm();
     // if (Object.keys(errors).length > 0) {
     //   setValidationErrors(errors);
     // } else {
+        router.navigate('screens/forms/nomineeDetailForm')
       try {
         console.log('Form data', formValues);
-        router.navigate('screens/forms/documentsForm')
+        router.navigate('screens/forms/nomineeDetailForm')
       } catch (err) {
         console.log('error', err);
       }
     
   };
- 
-  const validateForm = () => {
-    const errors = {};
-    if (renderFormData && renderFormData.elements) {
-      renderFormData.elements.forEach((element) => {
-        if (element.isRequired && !formValues[element.name]) {
-          errors[element.name] = `${element.title} is required`;
-        }
-        if (element.validation && element.validation.regex && !element.validation.regex.test(formValues[element.name])) {
-          errors[element.name] = element.validation.message;
-        }
-      });
-    }
-    return errors;
-  };
-  LogBox.ignoreAllLogs();
-  const handleInputChange = (name, value) => {
-    setFormValues((prevFormValues) => {
-      const updatedFormValues = { ...prevFormValues, [name]: value };
- 
-      // Perform dynamic validation for the changed field
-      const errors = { ...validationErrors };
-      const element = renderFormData.elements.find((el) => el.name === name);
- 
-      if (element) {
-        if (element.isRequired && !value) {
-          errors[name] = `${element.title} is required`;
-        } else if (element.validation && element.validation.regex && !element.validation.regex.test(value)) {
-          errors[name] = element.validation.message;
-        } else {
-          delete errors[name]; // Remove the error message if input is valid
-        }
+  const netInfo = useNetInfo();
+
+  useEffect(() => {
+      if (netInfo) {
+          setNetworkConnect(netInfo.isConnected);
       }
+  }, [netInfo]);   
+
+ console.log(networkConnect,"network stats")
+
  
-      setValidationErrors(errors);
-      return updatedFormValues;
-    });
-  };
- 
-  const renderFormElements = (section) => {
-    if (renderFormData && renderFormData.elements) {
-      return renderFormData.elements
-        .filter((element) => element.section === section)
-        .sort((a, b) => a.order - b.order)
-        .map((element, index) => (
-          <View key={index} style={styles.formElement}>
-            {renderFormElement(element)}
-            {validationErrors[element.name] && <Text style={styles.error}>{validationErrors[element.name]}</Text>}
-          </View>
-        ));
-    }
-    return null;
-  };
- 
-  const renderFormElement = (element) => {
-    const starMark = element.isRequired ? <Text style={{ color: 'red' }}> *</Text> : null;
- 
-    switch (element.type) {
-      case 'TextInput':
-        return (
-          <View>
-            <CustomInput
-              key={element.name}
-              title={element.title + (element.isRequired ? '' : '')}
-              placeholder={element.placeholder}
-              isRequired={element.isRequired}
-              inputType={element.inputType}
-              name={element.name}
-              onChange={(value) => handleInputChange(element.name, value)}
-              value={formValues[element.name] || ''}
-            />
-          </View>
-        );
- 
-      case 'dropdown':
-        return (
-          <View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>{element.title}{starMark}</Text>
-              <SelectList
-                boxStyles={{
-                  borderBottomWidth: 1,
-                  borderBottomColor: '#ccc',
-                  paddingVertical: 10,
-                  paddingHorizontal: 10,
-                  fontSize: 16,
-                  borderWidth: 0,
-                }}
-                setSelected={(label) => {
-                  setSelectedValue(label);
-                  handleInputChange(element.name, label);
-                }}
-                data={element.dropdownData.map(item => ({ value: item.key, label: item.value }))}
-                save="value"
-              />
-            </View>
-          </View>
-        );
- 
-      case 'RadioButton':
-        return (
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>{element.title}{starMark}</Text>
-            <RadioButton
-              onSelect={(item) => {
-                setRadioSelect(item.value);
-                handleInputChange(element.name, item.value);
-              }}
-              SelectedData={radioSelect}
-              disableLine={1}
-              value={radioSelect}
-              data={element.radioData}
-              title={element.title}
-            />
-          </View>
-        );
- 
-      case 'Date':
-        return (
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>{element.title}{starMark}</Text>
-            <Pressable onPress={() => setShowCalendarModal(true)}>
-              <View style={styles.dateInput}>
-                <Text style={styles.dateText}>
-                  {formValues[element.name] ? extractDate(formValues[element.name]) : 'Select date '}
-                </Text>
-                <Ionicons name='calendar' size={20} color='black' style={styles.icon} />
-              </View>
-            </Pressable>
-            {/* Calendar Modal */}
-            {showCalendarModal && (
-              <RNDateTimePicker
-                value={selectedDate || new Date()}
-                mode="date"
-                display="default"
-                onChange={(event, selectedDate) => handleDateChange(selectedDate, element)}
-              />
-            )}
-            {validationErrors[element.name] && <Text style={styles.errorMessage}>{validationErrors[element.name]}</Text>}
-          </View>
-        );
- 
-      default:
-        return null;
-    }
-  };
+
  
   return (
     <View style={styles.container}>
       <Header backPath="screens/forms/addressDetailsForm" />
-      <Form elements={profileDetailsFormData.elements}/>
+      <CheckNetwork onNetworkChange={setNetworkConnect} />
+      <Form elements={profileDetailsFormData.elements} onSubmit={onSubmit} networkConnect={networkConnect}/>
       {/* <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <View style={styles.card}>
           <View style={styles.section}>

@@ -218,7 +218,7 @@
 
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable, Button } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import { SelectList } from 'react-native-dropdown-select-list';
 import RadioButton from '../../../components/formComponents/customRadioButton';
@@ -226,23 +226,33 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import CustomInput from '../../../components/formComponents/customInput';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomCheckbox from '../../../components/formComponents/customCheckBox';
+import { themeColor } from '../../../constants/constants';
+import CheckNetwork from '../../../components/customComponents/checkNetwork';
 
-const FormField = ({ control, name, type, title, placeholder, validation, dropdownData, radioData }) => {
+const FormField = ({ control, name, type, title, placeholder, validation, dropdownData, radioData, handleCheckboxChange, networkConnect }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [showCalendarModal, setShowCalendarModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const validatePan=()=>{
+    console.log()
+  }
+
   const handleDateChange = (date, element) => {
-    setSelectedDate(date);
-    // Update the form field value
-    control.setValue(name, date.toDateString());
+    console.log(date);
+    console.log("Inside handle date change")
+    if (date) {
+      setSelectedDate(date);
+    //   control.setValue(date); // Use the element parameter to set the correct form field
+      console.log(element, date);
+    }
   };
   function extractDate(timestamp) {
     const dateObject = new Date(timestamp);
     const year = dateObject.getFullYear();
     const month = dateObject.getMonth() + 1;
     const date = dateObject.getDate();
-    const formattedDate = `${year}-${month < 10 ? '0' + month : month}-${date < 10 ? '0' + date : date}`;
+    const formattedDate = `${date < 10 ? '0' + date : date}-${month < 10 ? '0' + month : month}-${year}`;
     return formattedDate;
   }
  
@@ -331,14 +341,14 @@ const FormField = ({ control, name, type, title, placeholder, validation, dropdo
               SelectedData={value}
               disableLine={1}
               value={value}
-              data={radioData}
+              radioButtonOptions={radioData}
               title={title}
             />
           </View>
         );
       case 'Date':
         return (
-          <View style={styles.inputContainer}>
+            <View style={styles.inputContainer}>
             <Pressable onPress={() => setShowCalendarModal(true)}>
               <View style={styles.dateInput}>
                 <Text style={styles.dateText}>
@@ -354,7 +364,7 @@ const FormField = ({ control, name, type, title, placeholder, validation, dropdo
                 display="default"
                 onChange={(event, selectedDate) => {
                   setShowCalendarModal(false);
-                  handleDateChange(selectedDate, { name });
+                  handleDateChange(selectedDate, name);
                 }}
               />
             )}
@@ -367,9 +377,20 @@ const FormField = ({ control, name, type, title, placeholder, validation, dropdo
               label={title}
               isChecked={value}
               onChange={onChange}
+             handleCheckboxChange={handleCheckboxChange && handleCheckboxChange(name, newValue)}
             />
           </View>
         );
+        case 'Button':
+            return (
+              
+                    networkConnect && (
+                      <View style={styles.checkboxContainer}>
+                        <Button title='Validate PAN' color={themeColor} onPress={validatePan}></Button>
+                      </View>
+                    )
+                
+          );
           
  
       default:

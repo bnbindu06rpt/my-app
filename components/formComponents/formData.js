@@ -200,6 +200,15 @@
   export const personalDetailsFormData = {
     "elements": [
       {
+        "name": "title_code",
+        "type": "TextInput",
+        "title": "Title Code",
+        "placeholder": "Title Code",
+        "section": "Personal Details",
+        "order": 0,
+       
+      },
+      {
         "name": "first_name",
         "type": "TextInput",
         "title": "First Name",
@@ -291,6 +300,7 @@
           "required": "Father's Name is required"
         }
       },
+      
       {
         "name": "primary_mobile_number",
         "type": "phone",
@@ -310,7 +320,7 @@
       },
       {
         "name": "alternate_mobile_number",
-        "type": "TextInput",
+        "type": "phone",
         "inputType":"phone",
         "title": "Alternate Mobile Number",
         "placeholder": "Enter Alternate Mobile Number",
@@ -376,7 +386,7 @@
         "type": "TextInput",
         "title": "CKYC Number",
         "placeholder": "Enter CKYC Number",
-        "section": "Personal Details ",
+        "section": "Personal Details",
         "order": 14,
       }
     ]
@@ -529,8 +539,8 @@
         "type": "RadioButton",
         "title": "Address Preference",
         "radioData": [
-          { key: "local", value: "Local" },
-          { key: "foreign", value: "Foreign" }
+          { key: "local", label: "Local" },
+          { key: "foreign", label: "Foreign" }
         ],
         "section": "Communication Address",
       },
@@ -598,7 +608,7 @@
         "type": "dropdown",
         "title": "Country",
         "dropdownData": [
-          { key: "india", value: 'India' },
+          { key: "India", value: 'India' },
         ],
         "isRequired": true,
         "section": "Communication Address",
@@ -607,6 +617,7 @@
   };
 export const profileDetailsFormData = {
   "elements" : [
+  
       {
           "name": "pan_number",
           "type": "TextInput",
@@ -626,6 +637,15 @@ export const profileDetailsFormData = {
         //     "required": "First Name is required"
         //   }
         // },
+
+        {
+          "name": "check_pan",
+          "type": "Button",
+          "title": "Check PAN",
+          "section": "Profile Details",
+
+        },
+
 
         {
           "name": "educational_qualification",
@@ -833,6 +853,10 @@ export const searchCustomerFormData = {
         placeholder: "Enter Customer Name",
         validation: {
           required: "Customer Name is required",
+          minLength: {
+            value: 3,
+            message: "Customer Name must be at least 3 characters long",
+          },
         },
       },
       {
@@ -855,10 +879,10 @@ export const searchCustomerFormData = {
         placeholder: "Enter Mobile Number",
         validation: {
           required: "Mobile Number is required",
-          pattern: {
-            value: /^\\d{12}$/,
-            message: "Please enter a valid 10-digit phone number.",
-          },
+          // pattern: {
+          //   value: /^\d{12}$/,
+          //   message: "Please enter a valid 10-digit phone number.",
+          // },
         },
       },
     ],
@@ -895,7 +919,7 @@ export const searchCustomerFormData = {
         isRequired: true,
         section: "Profile Details",
         validation: {
-          required: "Risk Category is required",
+          required: "Proof Category is required",
         },
       },
       {
@@ -910,7 +934,7 @@ export const searchCustomerFormData = {
       },
     ],
     "CKYC Number":[{
-      name: "CKYC Number",
+      name: "ckyc_number",
       type: "TextInput",
       title: "Enter CKYC Number",
       isRequired: true,
@@ -922,8 +946,6 @@ export const searchCustomerFormData = {
           message:"Enter a valid CKYC number"
 
         }
-        
-      
       },
     },
   ]

@@ -26,13 +26,15 @@ export default function PersonalDetailsForm() {
     }, [formData]);
   
   const onSubmit = async () => {
+    console.log('Form data', formValues);
+        updateFormData(formValues);
 
       try {
         console.log('Form data', formValues);
         updateFormData(formValues);
         await off.withTransactionAsync(async (tx) => {
           await off.runAsync(
-              `UPDATE Customersss
+              `UPDATE Customerss
                  SET
                   customer_type = ?,
                   product_options = ?,

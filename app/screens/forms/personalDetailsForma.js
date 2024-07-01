@@ -89,7 +89,7 @@ export default function PersonalDetailsForm() {
     }, [formData]);
   
   const onSubmit = async () => {
-    const errors = validateForm();
+  
     // if (Object.keys(errors).length > 0) {
     //   setValidationErrors(errors);
     // } else {
